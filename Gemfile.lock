@@ -1,0 +1,49 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    actionmailer (2.3.2)
+      actionpack (= 2.3.2)
+    actionpack (2.3.2)
+      activesupport (= 2.3.2)
+    activerecord (2.3.2)
+      activesupport (= 2.3.2)
+    activeresource (2.3.2)
+      activesupport (= 2.3.2)
+    activesupport (2.3.2)
+    confidence (0.5.2)
+    factory_girl (1.3.2)
+    fastercsv (1.5.4)
+    json (1.5.1)
+    mocha (0.9.10)
+      rake
+    mysql (2.8.1)
+    nokogiri (1.4.4)
+    paperclip (2.3.8)
+      activerecord
+      activesupport
+    rails (2.3.2)
+      actionmailer (= 2.3.2)
+      actionpack (= 2.3.2)
+      activerecord (= 2.3.2)
+      activeresource (= 2.3.2)
+      activesupport (= 2.3.2)
+      rake (>= 0.8.3)
+    rake (0.8.7)
+    shoulda (2.11.3)
+    texticle (1.0.4.20101004123327)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  confidence
+  factory_girl
+  fastercsv
+  json
+  mocha
+  mysql
+  nokogiri
+  paperclip
+  rails (= 2.3.2)
+  shoulda
+  texticle
