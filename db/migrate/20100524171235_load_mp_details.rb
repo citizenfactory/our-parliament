@@ -2,7 +2,7 @@ require 'json'
 
 class LoadMpDetails < ActiveRecord::Migration
   def self.up
-    data_dir = File.join(RAILS_ROOT, 'db', 'mp_data')
+    data_dir = File.join(RAILS_ROOT, 'open-parliament-data', 'mp_data')
     Dir.foreach(data_dir) { |file|
       if file != '.' and file != '..'
         mp_info = JSON.parse(open(File.join(data_dir, file)).read)

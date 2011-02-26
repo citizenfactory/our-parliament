@@ -4,7 +4,7 @@ class ReloadMpDetailsV2 < ActiveRecord::Migration
   
   def self.up
     party_aliases = {}
-    alias_data = YAML::load_file(File.join(RAILS_ROOT, 'db', 'party_data', 'party_aliases.yml'))
+    alias_data = YAML::load_file(File.join(RAILS_ROOT, 'open-parliament-data', 'party_data', 'party_aliases.yml'))
     alias_data.each { |key,value|
       value.each{ |party_alias|
         party_aliases[party_alias] = key
@@ -15,7 +15,7 @@ class ReloadMpDetailsV2 < ActiveRecord::Migration
     CommitteeMembership.delete_all
     ParliamentaryFunction.delete_all
     
-    data_dir = File.join(RAILS_ROOT, 'db', 'mp_data')
+    data_dir = File.join(RAILS_ROOT, 'open-parliament-data', 'mp_data')
     Dir.foreach(data_dir) { |file|
       if file != '.' and file != '..'
         mp_info = JSON.parse(open(File.join(data_dir, file)).read)

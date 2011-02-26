@@ -2,7 +2,7 @@ require 'json'
 
 class BootstrapHansardData < ActiveRecord::Migration
   def self.up
-    data_dir = File.join(RAILS_ROOT, 'db', 'hansard_data')
+    data_dir = File.join(RAILS_ROOT, 'open-parliament-data', 'hansard_data')
     Dir.foreach(data_dir) { |file|
       if file != '.' and file != '..'
         hansard_info = JSON.parse(open(File.join(data_dir, file)).read)

@@ -3,7 +3,7 @@ class NormalizeProvinces < ActiveRecord::Migration
     add_column :mps, :province_id, :integer
     add_column :senators, :province_id, :integer
     
-    data_file = File.join(RAILS_ROOT, 'db', 'province_data', 'provinces.csv')
+    data_file = File.join(RAILS_ROOT, 'open-parliament-data', 'province_data', 'provinces.csv')
     FasterCSV.foreach(data_file, :encoding => 'U', :headers => true, :return_headers => false, :header_converters => :symbol, :converters => :all) do |row|
       province = Province.new({
         :name_en => row[:name_en],

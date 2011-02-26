@@ -4,7 +4,7 @@ class NormalizeParties < ActiveRecord::Migration
     add_column :senators, :party_id, :integer
     add_column :election_results, :party_id, :integer
     
-    data_file = File.join(RAILS_ROOT, 'db', 'party_data', 'parties.csv')
+    data_file = File.join(RAILS_ROOT, 'open-parliament-data', 'party_data', 'parties.csv')
     FasterCSV.foreach(data_file, :encoding => 'U', :headers => true, :return_headers => false, :header_converters => :symbol, :converters => :all) do |row|
       party = Party.new({
         :name_en => row[:name_en],

@@ -10,7 +10,7 @@ class NormalizeRidings < ActiveRecord::Migration
     remove_column :mps, :ed_id
     rename_column :election_results, :edid, :riding_id
     
-    data_file = File.join(RAILS_ROOT, 'db', 'riding_data', 'ridings.csv')
+    data_file = File.join(RAILS_ROOT, 'open-parliament-data', 'riding_data', 'ridings.csv')
     FasterCSV.foreach(data_file, :encoding => 'U', :headers => true, :return_headers => false, :header_converters => :symbol, :converters => :all) do |row|
       riding = Riding.new({
         :name_en => row[:name_en],

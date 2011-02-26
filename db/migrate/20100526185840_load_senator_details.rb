@@ -2,7 +2,7 @@ require 'fastercsv'
 
 class LoadSenatorDetails < ActiveRecord::Migration
   def self.up
-    data_file = File.join(RAILS_ROOT, 'db', 'senator_data', 'Senator Details.csv')
+    data_file = File.join(RAILS_ROOT, 'open-parliament-data', 'senator_data', 'Senator Details.csv')
     FasterCSV.foreach(data_file, :encoding => 'N', :headers => true, :return_headers => false, :header_converters => :symbol, :converters => :all) do |row|
       senator = Senator.find_by_name(row[:name])
       if senator
