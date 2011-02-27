@@ -30,17 +30,13 @@ class SenatorsController < ApplicationController
   
   def build_activity_stream
     activity_stream = ActivityStream.new
-    activity_stream.add_entries(fetch_news_entries())
-    return activity_stream
-  end
-  
-  def fetch_news_entries
     entries = []
     articles = @senator.news_articles.last 10
     articles.each { |article|
       entries << ActivityStream::Entry.new(article.date.to_date, article)
     }
-    return entries
+    activity_stream.add_entries(entries)
+    return activity_stream
   end
   
   private

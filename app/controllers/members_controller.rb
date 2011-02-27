@@ -51,47 +51,35 @@ class MembersController < ApplicationController
   
   def build_activity_stream
     activity_stream = ActivityStream.new
-    activity_stream.add_entries(fetch_vote_entries())
-    activity_stream.add_entries(fetch_quote_entries())
-    activity_stream.add_entries(fetch_twitter_entries())
-    activity_stream.add_entries(fetch_news_entries())
-    return activity_stream
-  end
-  
-  def fetch_vote_entries
+
     entries = []
     votes = Vote.last 5
     votes.each { |vote|
       entries << ActivityStream::Entry.new(vote.vote_date, vote)
     }
-    return entries
-  end
-  
-  def fetch_quote_entries
+    activity_stream.add_entries(entries)
+
     entries = []
     quotes = @mp.hansard_statements.first 5
     quotes.each { |quote|
       entries << ActivityStream::Entry.new(quote.time.to_date, quote)
     }
-    return entries
-  end
-  
-  def fetch_twitter_entries
+    activity_stream.add_entries(entries)
+
     entries = []
     tweets = @mp.tweets.first 5
     tweets.each { |tweet|
       entries << ActivityStream::Entry.new(tweet.created_at.to_date, tweet)
     }
-    return entries
-  end
-  
-  def fetch_news_entries
+    activity_stream.add_entries(entries)
+
     entries = []
     articles = @mp.news_articles.last 10
     articles.each { |article|
       entries << ActivityStream::Entry.new(article.date.to_date, article)
     }
-    return entries
+    activity_stream.add_entries(entries)
+    return activity_stream
   end
   
 end
