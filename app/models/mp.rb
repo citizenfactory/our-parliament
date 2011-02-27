@@ -39,11 +39,6 @@ class Mp < ActiveRecord::Base
   
   named_scope :active, :conditions => {:active => true}
   
-  def current_voting_stats
-    stats = {}
-    Vote.find_by_sql(:all, :conditions => ["mp_id"])
-  end
-  
   class << self
     def get_list
       list = open("http://webinfo.parl.gc.ca/MembersOfParliament/MainMPsCompleteList.aspx?TimePeriod=Current&Language=E")
@@ -67,10 +62,6 @@ class Mp < ActiveRecord::Base
     return date_of_birth ? now.year - date_of_birth.year - (date_of_birth.to_date.change(:year => now.year) > now ? 1 : 0) : nil
   end
   
-  def first_elected_date
-    return election_results.empty? ? nil : election_results.last.election.date
-  end
-
   def recorded_vote_for(vote)
     recorded_votes.find_by_vote_id(vote.id) || recorded_votes.new
   end
