@@ -18,20 +18,9 @@ class Senator < ActiveRecord::Base
   belongs_to :party
   has_and_belongs_to_many :news_articles, :join_table => 'senators_news_articles'
 
-  def news_search_name
-    URI.encode(normalized_name.gsub(/^.*Hon. /, '').gsub(',', ''))
-  end
-  
   def normalized_name
     last,first = name.split(',').collect(&:strip)
     [first, last].join(" ")
-  end
-  
-  def scrubbed_affiliation
-    {
-      "C" => "Conservative", "Lib." => "Liberal", "" => "Independent", 
-      "Prog. Conser." => "Progressive Conservative", "Ind." => "Independent"
-     }[affiliation]
   end
   
   def links

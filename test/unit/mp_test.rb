@@ -25,10 +25,4 @@ class MpTest < ActiveSupport::TestCase
     
     assert !mp.links.keys.any?, "should not have links, but had #{mp.links.inspect}"
   end
-  
-  def test_news_search_name
-    assert_equal "John%20Abbott%20MP",     Factory(:mp, :name => "Hon. John Abbott").news_search_name
-    assert_equal "Stephen%20Harper%20MP", Factory(:mp, :name => "Right Hon. Stephen Harper").news_search_name
-    assert_equal "John%20Abbott%20MP",     Factory(:mp, :name => "John Abbott").news_search_name
-  end
 end

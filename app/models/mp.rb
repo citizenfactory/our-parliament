@@ -85,10 +85,6 @@ class Mp < ActiveRecord::Base
     h
   end
 
-  def news_search_name
-    URI.encode(name.gsub(/^.*Hon. /, '').gsub(',', '') + " MP")
-  end
-
   def download
     `curl \"http://webinfo.parl.gc.ca/MembersOfParliament/ProfileMP.aspx?Key=#{parl_gc_id}&Language=E\" > tmp/mps/mp_#{parl_gc_id}`
   end
