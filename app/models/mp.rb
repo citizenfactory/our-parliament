@@ -50,9 +50,6 @@ class Mp < ActiveRecord::Base
     
     def find_by_constituency_name_and_last_name(constituency_name, lastname)
       mps = find :all, :include => [:riding], :conditions => {'ridings.name_en' => constituency_name}
-      # puts mps.inspect
-      # puts "for lastname: #{lastname}"
-      
       mps.detect {|mp| mp.name =~ /#{lastname}$/}
     end
   end
