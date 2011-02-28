@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class VoteTest < ActiveSupport::TestCase
-  should_have_many :recorded_votes
+  should have_many :recorded_votes
   
   def test_total_votes
     112.times { Factory(:mp) }

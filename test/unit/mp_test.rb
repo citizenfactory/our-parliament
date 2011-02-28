@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class MpTest < ActiveSupport::TestCase
-  should_have_many :recorded_votes
+  should have_many :recorded_votes
   
   def test_link_construction
     mp = Factory(:mp)
