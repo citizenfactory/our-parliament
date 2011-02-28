@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20100726112629) do
     t.string   "attribution"
     t.string   "heading"
     t.string   "topic"
-    t.text     "text",        :limit => 16777215
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -124,8 +124,8 @@ ActiveRecord::Schema.define(:version => 20100726112629) do
   end
 
   create_table "news_articles", :force => true do |t|
-    t.string   "url",     :limit => 1024
-    t.string   "title",   :limit => 1024
+    t.string   "url"
+    t.string   "title"
     t.string   "source"
     t.datetime "date"
     t.text     "summary"
@@ -204,7 +204,7 @@ ActiveRecord::Schema.define(:version => 20100726112629) do
 
   create_table "tweets", :force => true do |t|
     t.integer  "mp_id"
-    t.integer  "twitter_id", :limit => 8
+    t.integer  "twitter_id"
     t.string   "text"
     t.datetime "created_at"
   end
