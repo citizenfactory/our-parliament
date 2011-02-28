@@ -9,7 +9,7 @@ class Admin::SenatorsControllerTest < ActionController::TestCase
       get :index
     end
     
-    should_assign_to :senators
-    should_respond_with :success
+    should assign_to :senators
+    should respond_with :success
   end
 end

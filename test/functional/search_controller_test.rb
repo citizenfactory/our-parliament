@@ -8,14 +8,17 @@ class SearchControllerTest < ActionController::TestCase
       mp = Factory(:mp, :name => 'nobody')
       s  = Factory(:senator, :name => "Hon. Important Person")
       
-      Vote.expects(:search).returns([v])
+      #Vote.expects(:search).returns([v])
       Mp.expects(:search).returns([mp])
       Senator.expects(:search).returns([s])
       
       get :index, :q => "important"
     end
     
-    should_assign_to :mps, :votes, :senators, :q
-    should_respond_with :success
+    should assign_to :mps
+    should assign_to :votes
+    should assign_to :senators
+    should assign_to :q
+    should respond_with :success
   end
 end

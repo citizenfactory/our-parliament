@@ -8,8 +8,8 @@ class SenatorsControllerTest < ActionController::TestCase
       get :index
     end
     
-    should_assign_to :senators
-    should_respond_with :success
+    should assign_to :senators
+    should respond_with :success
   end
   
   context "on GET to show" do
@@ -21,8 +21,10 @@ class SenatorsControllerTest < ActionController::TestCase
       get :show, :id => senator.id
     end
     
-    should_assign_to :senator, :article_links, :glossary_links
-    should_respond_with :success
+    should assign_to :senator
+    should assign_to :article_links
+    should assign_to :glossary_links
+    should respond_with :success
   end
   
   context "on GET to edit without auth" do
@@ -32,7 +34,7 @@ class SenatorsControllerTest < ActionController::TestCase
       get :edit, :id => senator.id
     end
     
-    should_respond_with 401
+    should respond_with 401
   end
 
   context "on GET to edit with auth" do
@@ -43,7 +45,7 @@ class SenatorsControllerTest < ActionController::TestCase
       get :edit, :id => senator.id
     end
     
-    should_respond_with :success
+    should respond_with :success
   end
   
   context "on PUT to update" do
@@ -54,7 +56,7 @@ class SenatorsControllerTest < ActionController::TestCase
       put :update, :id => @senator.id, :senator => {:name => "after"}
     end
     
-    should_respond_with :redirect
+    should respond_with :redirect
     
     should "have updated the senator's name" do
       assert_equal "after", @senator.reload.name

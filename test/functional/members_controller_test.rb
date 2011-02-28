@@ -12,8 +12,9 @@ class MembersControllerTest < ActionController::TestCase
       get :index
     end
     
-    should_assign_to :mps, :last_vote
-    should_respond_with :success
+    should assign_to :mps
+    should assign_to :last_vote
+    should respond_with :success
   end
   
   context "on GET to show" do
@@ -23,8 +24,8 @@ class MembersControllerTest < ActionController::TestCase
       get :show, :id => mp.id
     end
     
-    should_assign_to :votes
-    should_respond_with :success
+    should assign_to :activity_stream
+    should respond_with :success
   end
 
   
@@ -35,7 +36,7 @@ class MembersControllerTest < ActionController::TestCase
       get :edit, :id => mp.id
     end
     
-    should_respond_with 401
+    should respond_with 401
   end
 
   context "on GET to edit with auth" do
@@ -46,7 +47,7 @@ class MembersControllerTest < ActionController::TestCase
       get :edit, :id => mp.id
     end
     
-    should_respond_with :success
+    should respond_with :success
   end
   
   context "on PUT to update" do
@@ -57,7 +58,7 @@ class MembersControllerTest < ActionController::TestCase
       put :update, :id => @mp.id, :mp => {:name => "after"}
     end
     
-    should_respond_with :redirect
+    should respond_with :redirect
     
     should "have updated the mp's name" do
       assert_equal "after", @mp.reload.name
@@ -71,8 +72,9 @@ class MembersControllerTest < ActionController::TestCase
       get :votes, :id => @mp.id
     end
     
-    should_assign_to :mp, :votes
-    should_respond_with :success
-    should_respond_with_content_type 'application/rss+xml'
+    should assign_to :mp
+    should assign_to :votes
+    should respond_with :success
+    should respond_with_content_type 'application/rss+xml'
   end
 end

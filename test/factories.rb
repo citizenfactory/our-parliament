@@ -4,18 +4,18 @@ end
 
 Factory.define :mp do |mp|
   mp.active true
-  mp.riding_id { Factory.next :id }
+  mp.riding { Factory(:riding) }
   mp.parl_gc_id { Factory.next :id }
   mp.parl_gc_constituency_id { Factory.next :id }
   
-  mp.party_id { Factory.next :id }
-  mp.name { Factory.next :id }
+  mp.party { Factory(:party) }
+  mp.name "MP"
 end
 
 Factory.define :senator do |s|
-  s.name { Factory.next :id}
-  s.party_id { Factory.next :id }
-  s.province_id { Factory.next :id }
+  s.name "Senator"
+  s.party { Factory(:party) }
+  s.province { Factory(:province) }
   s.nomination_date Date.parse("1993-03-11")
   s.retirement_date Date.parse("2019-08-14")
   s.appointed_by "Mulroney (Prog. Conser.)"
@@ -29,4 +29,16 @@ Factory.define :link do |l|
   l.url      "http://example.com"
   l.title    "example"
   l.category "glossary"
+end
+
+Factory.define :province do |p|
+  p.name "Province"
+end
+
+Factory.define :party do |p|
+  p.name "Party"
+end
+
+Factory.define :riding do |r|
+  r.name "Riding"
 end
