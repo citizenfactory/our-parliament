@@ -2,7 +2,7 @@ xml.instruct! :xml, :version => "1.0"
 xml.rss :version => "2.0" do
   xml.channel do
     xml.title "Recent votes by #{@mp.name}"
-    xml.description "Votes by #{@mp.name}, MP for #{@mp.constituency_name}"
+    xml.description "Votes by #{@mp.name}, MP for #{@mp.riding.name}"
    # xml.link formatted_member_url(@mp, :rss)
     
     for vote in @votes

@@ -12,10 +12,10 @@ class MpTest < ActiveSupport::TestCase
     
     assert mp.links.is_a?(Hash)
     
-    assert_equal "http://en.wikipedia.org/wiki/Alan_Tonks", mp.links["Wikipedia Entry"]
-    assert_equal "http://en.wikipedia.org/wiki/York_South—Weston", mp.links["Wikipedia Riding Entry"]
-    assert_equal "http://twitter.com/tweeter", mp.links["Twitter Account"]
-    assert_equal "http://www.facebook.com/pages/Alan-Tonks/6334782980", mp.links["Facebook Page"]
+    assert_equal "http://en.wikipedia.org/wiki/Alan_Tonks", mp.links[I18n.t('members.weblink.wikipedia', :member_name => mp.name)]
+    assert_equal "http://en.wikipedia.org/wiki/York_South—Weston", mp.links[I18n.t('members.weblink.wikipedia_riding', :member_name => mp.name)]
+    assert_equal "http://twitter.com/tweeter", mp.links[I18n.t('members.weblink.twitter', :member_name => mp.name)]
+    assert_equal "http://www.facebook.com/pages/Alan-Tonks/6334782980", mp.links[I18n.t('members.weblink.facebook', :member_name => mp.name)]
   end
   
   def test_link_returns_empty

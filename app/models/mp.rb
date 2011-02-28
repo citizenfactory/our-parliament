@@ -81,7 +81,7 @@ class Mp < ActiveRecord::Base
     File.exists?("tmp/mps/mp_#{parl_gc_id}")
   end
 
-  def extract_summary_info
+  def extract_summary_info #@todo constituency_name, constituency_province no longer exist
     doc = Hpricot(File.read("tmp/mps/mp_#{parl_gc_id}"))
     self.parl_gc_constituency_id = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_TombstoneContent_TombstoneContent_ucHeaderMP_hlConstituencyProfile"]')[0].attributes['href'].match(/Key=(\d+)/)[1]
     self.constituency_name = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_TombstoneContent_TombstoneContent_ucHeaderMP_hlConstituencyProfile"]').innerHTML
@@ -104,7 +104,7 @@ class Mp < ActiveRecord::Base
     self.save
   end
   
-  def scrape_edid
+  def scrape_edid #@todo ed_id is now riding_id (a foreign key)
     constituency_profile = open("http://webinfo.parl.gc.ca/MembersOfParliament/ProfileConstituency.aspx?Key=#{parl_gc_constituency_id}&Language=E").read
     self.update_attribute(:ed_id,constituency_profile.match(/ED=(\d+)/)[1])
   end

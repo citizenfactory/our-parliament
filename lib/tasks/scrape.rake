@@ -81,6 +81,7 @@ namespace :scrape do
       
       # YUCK: I'd like separate spidering and extraction tasks, but ed_id was tedious
       # since this runs so rarely, I'm leaving it as is
+      #@todo ed_id is now riding_id (a foreign key)
       if mp.ed_id.nil?
         mp.scrape_edid
         puts "resolved ED: #{mp.ed_id}"

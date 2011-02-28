@@ -10,6 +10,11 @@ GEM
     activeresource (2.3.2)
       activesupport (= 2.3.2)
     activesupport (2.3.2)
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
+    builder (3.0.0)
     columnize (0.3.2)
     confidence (0.5.2)
     crack (0.1.8)
@@ -20,6 +25,7 @@ GEM
       crack (= 0.1.8)
     json (1.5.1)
     linecache (0.43)
+    mime-types (1.16)
     mocha (0.9.10)
       rake
     nokogiri (1.4.4)
@@ -42,11 +48,13 @@ GEM
       linecache (>= 0.3)
     shoulda (2.11.3)
     texticle (1.0.4.20101004123327)
+    xml-simple (1.0.12)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-s3
   confidence
   factory_girl
   fastercsv

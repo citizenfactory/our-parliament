@@ -22,14 +22,14 @@ class MembersController < ApplicationController
     redirect_to member_path(@mp)
   end
   
-  def votes
+  def votes # not used
     @votes = Vote.all
     respond_to do |format| 
       format.rss { render } 
     end
   end
   
-  def quotes
+  def quotes # not used
     @quotes = @mp.hansard_statements
     respond_to do |format| 
       format.rss { render } 
