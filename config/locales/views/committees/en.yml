@@ -1,7 +1,7 @@
 en:
     committees:
         index:
-            title: "Committes"
+            title: "Committees"
         show:
             title: ""
             subcommittees: "Subcommittees"
