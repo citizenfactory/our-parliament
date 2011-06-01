@@ -2,10 +2,10 @@
 
 <% @content_layout = "has_sidebar_right" %>
 
-<p>Tout ce qui se dit dans la Maison des communes est aussi transcrit, que ce soit lors d’un débat des députés sur un projet de loi ou durant la période de question, lorsque les membres de l’opposition posent des questions aux membres du Cabinet. Tu peux consulter les transcriptions de la session parlementaire actuelle ci-dessous. </p>
+<p>Tout ce qui se dit dans la Chambre des communes et le Sénat est aussi transcrit, que ce soit lors d’un débat des députés sur un projet de loi ou durant la période de question, lorsque les membres de l’opposition posent des questions aux membres du Cabinet. Tu peux consulter les transcriptions de la session parlementaire actuelle ci-dessous. </p>
 
 <% for year in @years %>
-	<h3><%= year %></h3>
+	<h3>Débats de la Chambre, <%= year %></h3>
 	<% 0.upto(11) { |month| %>
 		<% if @hansards_by_year[year][month] %>
 			<%= calendar(:year => year, :month => month) do |d|

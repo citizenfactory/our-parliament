@@ -1,6 +1,6 @@
 fr:
     debates:
         index:
-            title: "Débats actuels"
+            title: "Débats"
         show:
             debate_title: "Débats de {{date}}"
