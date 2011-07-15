@@ -43,12 +43,14 @@ class Senator < ActiveRecord::Base
       if File.exists?(fname)
         IO.read(fname)
       else
-        File.open(fname, "w") {|f| f.puts open("http://www.parl.gc.ca/SenatorsMembers/Senate/SenatorsBiography/isenator.asp?Language=E").read}
+        content = f.puts open("http://www.parl.gc.ca/SenatorsMembers/Senate/SenatorsBiography/isenator.asp?Language=E").read
+        File.open(fname, "w") {|f| content}
+        content
       end
     end
     
     def scrape_list
-      rows = Nokogiri::HTML(spider_list) / "//html/body/table[3]/tr/td[2]/table/tr"
+      rows = Nokogiri::HTML(spider_list) / "//html/body/table[2]/tr/td[2]/table/tr"
       
       rows.reject do |row|
         row.to_s !~ /isenator/
