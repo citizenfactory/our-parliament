@@ -69,7 +69,7 @@ namespace :scrape do
       if ! mp.downloaded?
         mp.download
         puts "downloaded: " + mp.parl_gc_id.to_s
-        sleep between(10,20)
+        sleep between(1,2)
       end
     end
   end
