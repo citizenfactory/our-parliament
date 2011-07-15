@@ -45,7 +45,6 @@ namespace :update do
     Mp.find(:all, :conditions => "twitter IS NOT NULL AND LENGTH(twitter) > 0").each { |mp|
       tweets = mp.fetch_new_tweets
       puts "Found #{tweets.size} new tweets for #{mp.name}" if tweets.size > 0
-      sleep(1)
     }
   end
   
@@ -57,14 +56,12 @@ namespace :update do
       mp.news_articles << articles
       mp.save
       puts "Found #{articles.size} new articles for #{mp.name}" if articles.size > 0
-      sleep(1)
     }
     Senator.find(:all).each { |senator|
       articles = senator.fetch_news_articles
       senator.news_articles << articles
       senator.save
       puts "Found #{articles.size} new articles for #{senator.name}" if articles.size > 0
-      sleep(1)
     }
   end
   
