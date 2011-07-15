@@ -3,11 +3,11 @@ en:
         edit:
             title: ""
         index:
-            title: "Current Senators"
+            title: "Senators"
         show:
             title: ""
             subtitle: "{{party_name}} Senator from {{province_name}}"
-            intro: "Senators are busy people and we'd love to tell you what they're up to. Unfortunately, Citizen Factory can't legally republish the Senate's proceedings at this time. But that doesn't mean you can't contact your Senator or <a href=\"{{link}}\">learn about your MP</a> instead."
+            intro: "Senators are busy people and we'd love to tell you what they're up to. Unfortunately, Citizen Factory can't republish the Senate's proceedings at this time. But that doesn't mean you can't contact your Senator or <a href=\"{{link}}\">learn about your MP</a>."
             nominated: "Nominated on"
             retires: "Retires on"
         section:

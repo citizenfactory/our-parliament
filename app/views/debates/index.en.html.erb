@@ -2,10 +2,10 @@
 
 <% @content_layout = "has_sidebar_right" %>
 
-<p>Everything that's said in the House of Commons is also transcribed: MPs debating a bill, Question Period, questions to cabinet ministers, everything. You can look through the transcripts from the current session of Parliament below.</p>
+<p>Everything that's said in the House of Commons and Senate is also transcribed: people debating a bill, Question Period, questions to cabinet ministers, everything. You can look through the transcripts from the current session of the House of Commons below.</p>
 
 <% for year in @years %>
-	<h3><%= year %></h3>
+	<h3><%= year %> House of Commons Debates</h3>
 	<% 0.upto(11) { |month| %>
 		<% if @hansards_by_year[year][month] %>
 			<%= calendar(:year => year, :month => month) do |d|
