@@ -74,7 +74,7 @@ class Mp < ActiveRecord::Base
   end
 
   def download
-    `curl \"http://webinfo.parl.gc.ca/MembersOfParliament/ProfileMP.aspx?Key=#{parl_gc_id}&Language=E\" > #{download_path}`
+    `curl \"http://www.parl.gc.ca/MembersOfParliament/ProfileMP.aspx?Key=#{parl_gc_id}&Language=E\" > #{download_path}`
   end
   
   def downloaded?
@@ -109,7 +109,7 @@ class Mp < ActiveRecord::Base
   end
   
   def scrape_edid #@todo ed_id is now riding_id (a foreign key)
-    constituency_profile = open("http://webinfo.parl.gc.ca/MembersOfParliament/ProfileConstituency.aspx?Key=#{parl_gc_constituency_id}&Language=E").read
+    constituency_profile = open("http://www.parl.gc.ca/MembersOfParliament/ProfileConstituency.aspx?Key=#{parl_gc_constituency_id}&Language=E").read
     self.update_attribute(:ed_id,constituency_profile.match(/ED=(\d+)/)[1])
   end
   
