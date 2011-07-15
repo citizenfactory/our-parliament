@@ -43,9 +43,7 @@ class Senator < ActiveRecord::Base
       if File.exists?(fname)
         IO.read(fname)
       else
-        returning(open("http://www.parl.gc.ca/common/senmemb/senate/isenator.asp?Language=E").read) do |content|
-          File.open(fname, "w") {|f| f.puts content}
-        end
+        File.open(fname, "w") {|f| f.puts open("http://www.parl.gc.ca/SenatorsMembers/Senate/SenatorsBiography/isenator.asp?Language=E").read}
       end
     end
     
