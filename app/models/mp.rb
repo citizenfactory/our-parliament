@@ -41,7 +41,7 @@ class Mp < ActiveRecord::Base
   
   class << self
     def get_list
-      list = open("http://webinfo.parl.gc.ca/MembersOfParliament/MainMPsCompleteList.aspx?TimePeriod=Current&Language=E")
+      list = open("http://www.parl.gc.ca/MembersOfParliament/MainMPsCompleteList.aspx?TimePeriod=Current&Language=E")
       list.each_line do |line|
         m = line.match(/ProfileMP\.aspx\?Key=(\d+)/)
         Mp.create(:parl_gc_id => m[1]) if m && !Mp.find_by_parl_gc_id(m[1])
