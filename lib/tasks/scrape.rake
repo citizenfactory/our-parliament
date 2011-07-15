@@ -69,7 +69,6 @@ namespace :scrape do
       if ! mp.downloaded?
         mp.download
         puts "downloaded: " + mp.parl_gc_id.to_s
-        sleep between(1,2)
       end
     end
   end
@@ -85,7 +84,6 @@ namespace :scrape do
       if mp.ed_id.nil?
         mp.scrape_edid
         puts "resolved ED: #{mp.ed_id}"
-        sleep between(2,5)
       end
     end
   end
@@ -128,7 +126,6 @@ namespace :scrape do
       else
         puts "   -- fetching"
         scrape_vote parliament, vote.session, vote.number
-        sleep between(1, 3)
       end
     end
   end
