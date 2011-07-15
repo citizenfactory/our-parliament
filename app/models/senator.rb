@@ -39,7 +39,7 @@ class Senator < ActiveRecord::Base
   class << self
     def spider_list
       # TODO: caching logic should be extracted into scraping tools
-      fname = 'tmp/spidering/senator_list'
+      fname = File.expand_path File.join(Rails.root, 'tmp/spidering/senator_list')
       if File.exists?(fname)
         IO.read(fname)
       else

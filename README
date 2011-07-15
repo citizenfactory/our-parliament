@@ -1,5 +1,0 @@
-== Our Parliament
-
-Pushing to live server:
-heroku db:push mysql://root:@localhost/citizen_factory_development?encoding=latin1
-
