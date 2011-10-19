@@ -32,7 +32,8 @@ Factory.define :link do |l|
 end
 
 Factory.define :province do |p|
-  p.name "Province"
+  p.abbreviation "NY"
+  p.name "Empire Province"
 end
 
 Factory.define :party do |p|

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100726112629) do
+ActiveRecord::Schema.define(:version => 20111019014757) do
 
   create_table "committee_memberships", :force => true do |t|
     t.integer "mp_id"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20100726112629) do
     t.string   "name_fr"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "abbreviation", :limit => 2, :null => false
   end
 
   create_table "recorded_votes", :force => true do |t|
