@@ -4,7 +4,7 @@ development:
   adapter: postgresql
   database: citizen_factory_development
   username: root
-  password: 
+  password:
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -13,4 +13,5 @@ test:
   adapter: postgresql
   database: citizen_factory_test
   username: root
-  password: 
+  password:
+  min_messages: warning
