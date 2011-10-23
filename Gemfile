@@ -16,4 +16,5 @@ group :test do
   gem 'shoulda'
   gem 'mocha'
   gem 'ruby-debug'
+  gem 'test-unit'
 end
