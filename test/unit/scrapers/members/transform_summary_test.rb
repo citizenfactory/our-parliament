@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class Scrapers::Mp::TransformWithValidDataTest < ActiveSupport::TestCase
+class Scrapers::Members::TransformSummaryWithValidDataTest < ActiveSupport::TestCase
   def self.startup
     file = File.join(Rails.root, "test", "fixtures", "mp_99.html")
-    transformer = Scrapers::Mp::Transform.new(file)
+    transformer = Scrapers::Members::TransformSummary.new(file)
     @@data = transformer.run
   end
 
@@ -64,10 +64,10 @@ class Scrapers::Mp::TransformWithValidDataTest < ActiveSupport::TestCase
   end
 end
 
-class Scrapers::Mp::TransformWithInvalidDataTest < ActiveSupport::TestCase
+class Scrapers::Members::TransformSummaryWithInvalidDataTest < ActiveSupport::TestCase
   def self.startup
     File.stubs(:read).returns("<html><body>Random HTML</body></html>")
-    transformer = Scrapers::Mp::Transform.new("foo.html")
+    transformer = Scrapers::Members::TransformSummary.new("foo.html")
     @@data = transformer.run
   end
 

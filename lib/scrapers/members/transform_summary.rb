@@ -1,6 +1,6 @@
 module Scrapers
-  module Mp
-    class Transform
+  module Members
+    class TransformSummary
       def initialize(filename)
         @filename = filename
         @input = File.read(@filename)

@@ -1,6 +1,6 @@
 module Scrapers
-  module Mp
-    class Load
+  module Members
+    class LoadSummary
       SIMPLE_ATTRIBUTES = [
         "parl_gc_constituency_id",
         "name",

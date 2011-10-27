@@ -1,8 +1,8 @@
 require 'net/http'
 
 module Scrapers
-  module Mp
-    class Extract
+  module Members
+    class ExtractSummary
       HOST = "www.parl.gc.ca"
       PATH = "/MembersOfParliament/ProfileMP.aspx"
       QUERY_STRING = "Language=E"

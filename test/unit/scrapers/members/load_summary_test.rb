@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Scrapers::Mp::LoadTest < ActiveSupport::TestCase
+class Scrapers::Members::LoadTest < ActiveSupport::TestCase
   {
     "parl_gc_constituency_id" => "10",
     "name" => "Foo Name",
@@ -16,45 +16,45 @@ class Scrapers::Mp::LoadTest < ActiveSupport::TestCase
     "constituency_fax" => "211-385-3211"
   }.each do |attr, value|
     define_method "test_#{attr}_attribute" do
-      assert_equal value, Scrapers::Mp::Load.new( { attr => value } ).run.send(attr.to_sym)
+      assert_equal value, Scrapers::Members::LoadSummary.new( { attr => value } ).run.send(attr.to_sym)
     end
   end
 
   def test_invalid_attribute_does_not_raise_error
     assert_nothing_raised do
-      Scrapers::Mp::Load.new( { "foo" => "bar" } ).run
+      Scrapers::Members::LoadSummary.new( { "foo" => "bar" } ).run
     end
   end
 
   def test_valid_party_attribute
     party = Factory(:party, :name => "Conservative")
-    assert_equal party, Scrapers::Mp::Load.new( { "party" => "Conservative" } ).run.party
+    assert_equal party, Scrapers::Members::LoadSummary.new( { "party" => "Conservative" } ).run.party
   end
 
   def test_invalid_party_attribute
-    assert_nil Scrapers::Mp::Load.new( { "party" => "Foo Party" } ).run.party
+    assert_nil Scrapers::Members::LoadSummary.new( { "party" => "Foo Party" } ).run.party
   end
 
   def test_valid_province_attribute
     province = Factory(:province, :name => "British Columbia")
-    assert_equal province, Scrapers::Mp::Load.new( { "province" => "British Columbia" } ).run.province
+    assert_equal province, Scrapers::Members::LoadSummary.new( { "province" => "British Columbia" } ).run.province
   end
 
   def test_invalid_province_attribute
-    assert_nil Scrapers::Mp::Load.new( { "province" => "New Yaulk" } ).run.province
+    assert_nil Scrapers::Members::LoadSummary.new( { "province" => "New Yaulk" } ).run.province
   end
 
   def test_already_existing_mp
     mp = Factory(:mp, :parl_gc_id => "99")
 
     assert_equal 1, Mp.count
-    Scrapers::Mp::Load.new( { "parl_gc_id" => "99" } ).run
+    Scrapers::Members::LoadSummary.new( { "parl_gc_id" => "99" } ).run
     assert_equal 1, Mp.count
   end
 
   def test_new_mp
     assert_equal 0, Mp.count
-    Scrapers::Mp::Load.new( { "parl_gc_id" => "99" } ).run
+    Scrapers::Members::LoadSummary.new( { "parl_gc_id" => "99" } ).run
     assert_equal 1, Mp.count
   end
 end
