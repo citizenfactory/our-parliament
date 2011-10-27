@@ -6,11 +6,6 @@ class Scrapers::Members::ExtractSummaryTest < ActiveSupport::TestCase
     FileUtils.stubs(:mkdir_p)
   end
 
-  def test_http_connection_with_correct_params
-    Net::HTTP.expects(:start).with(Scrapers::Members::ExtractSummary::HOST)
-    Scrapers::Members::ExtractSummary.new( anything ).run
-  end
-
   def test_default_output_dir
     default_dir = File.join(Rails.root, "tmp", "data")
     assert_equal Scrapers::Members::ExtractSummary.new(anything).output_dir, default_dir
@@ -24,6 +19,11 @@ class Scrapers::Members::ExtractSummaryTest < ActiveSupport::TestCase
     File.expects(:directory?).returns(false)
     FileUtils.expects(:mkdir_p).with("foo_dir")
     Scrapers::Members::ExtractSummary.new(anything, :output_dir => "foo_dir")
+  end
+
+  def test_http_connection_with_correct_params
+    Net::HTTP.expects(:start).with(Scrapers::Members::ExtractSummary::HOST)
+    Scrapers::Members::ExtractSummary.new( anything ).run
   end
 
   def test_http_get_with_correct_url
