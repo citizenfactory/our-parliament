@@ -17,7 +17,10 @@ module Scrapers
         "constituency_fax"
       ]
 
-      def initialize(attributes)
+      attr_reader :logger
+
+      def initialize(attributes, options = {})
+        @logger = options[:logger] || Rails.logger
         @attributes = attributes
       end
 
@@ -32,7 +35,7 @@ module Scrapers
         #mp.riding # currently edid
 
         if mp.save == false
-          puts "Failed to save MP: #{mp.errors.full_messages}"
+          logger.error "Failed to save MP: #{mp.errors.full_messages}"
         end
 
         mp

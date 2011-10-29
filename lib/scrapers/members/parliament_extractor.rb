@@ -5,9 +5,10 @@ module Scrapers
       PATH = ""
       QUERY_STRING = ""
 
-      attr_reader :output_dir
+      attr_reader :logger, :output_dir
 
       def initialize(options = {})
+        @logger = options[:logger] || Rails.logger
         @output_dir = options[:output_dir] || File.join(Rails.root, "tmp", "data")
         FileUtils.mkdir_p(@output_dir) if !File.directory?(@output_dir)
       end
@@ -18,7 +19,7 @@ module Scrapers
           if response.code == "200"
             File.open(output_file, "w") { |f| f.write(response.body) }
           else
-            puts "Error: #{response.code} #{response.inspect}"
+           logger.error "#{response.code} #{response.message}"
           end
         end
       end
