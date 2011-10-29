@@ -16,18 +16,22 @@ module Scrapers
         Net::HTTP.start(HOST) do |http|
           response = http.get(url)
           if response.code == "200"
+            puts "Writing data to #{output_file}"
             File.open(output_file, "w") { |f| f.write(response.body) }
+            puts "File written"
+          else
+            puts "Error: #{response.code} #{response.inspect}"
           end
         end
+      end
+
+      def output_file
+        raise NotImplementedError
       end
 
       private
 
       def url
-        raise NotImplementedError
-      end
-
-      def output_file
         raise NotImplementedError
       end
     end

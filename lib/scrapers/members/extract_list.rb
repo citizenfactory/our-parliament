@@ -5,14 +5,14 @@ module Scrapers
       PATH = "MembersOfParliament/MainMPsCompleteList.aspx"
       QUERY_STRING = "TimePeriod=Current&Language=E"
 
+      def output_file
+        File.join(@output_dir, "mp_list.html")
+      end
+
       private
 
       def url
-        "#{PATH}?#{QUERY_STRING}"
-      end
-
-      def output_file
-        File.join(@output_dir, "mp_list.html")
+        "/#{PATH}?#{QUERY_STRING}"
       end
     end
   end

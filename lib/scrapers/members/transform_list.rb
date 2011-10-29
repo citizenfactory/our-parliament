@@ -12,7 +12,7 @@ module Scrapers
             try(:[], :href).
             try(:match, /Key=(\d+)/).
             try(:[], 1)
-        end
+        end.compact
       end
 
       private

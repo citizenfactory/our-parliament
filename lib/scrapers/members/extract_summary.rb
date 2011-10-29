@@ -12,11 +12,11 @@ module Scrapers
         @id = id
       end
 
-      private
-
       def output_file
         File.join(@output_dir, "mp_#{@id}.html")
       end
+
+      private
 
       def url
         "#{PATH}?#{QUERY_STRING}&Key=#{@id}"
