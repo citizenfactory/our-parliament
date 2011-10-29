@@ -16,6 +16,11 @@ module Scrapers
             extractor.run
             transformer = Scrapers::Members::TransformSummary.new(extractor.output_file)
             loader = Scrapers::Members::LoadSummary.new(transformer.run)
+            mp = loader.run
+
+            if mp.errors.present?
+              puts mp.errors.full_messages
+            end
           end
         end
       end

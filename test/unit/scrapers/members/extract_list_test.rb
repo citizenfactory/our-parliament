@@ -53,7 +53,7 @@ class Scrapers::Members::ExtractListTest < ActiveSupport::TestCase
 
   def test_no_file_written_if_the_response_code_is_not_200
     mock_response = mock
-    mock_response.expects(:code).returns("404")
+    mock_response.expects(:code).at_least_once.returns("404")
 
     stub_http = stub("http connection", :get => mock_response)
     Net::HTTP.stubs(:start).yields(stub_http)

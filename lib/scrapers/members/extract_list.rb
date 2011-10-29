@@ -2,7 +2,7 @@ module Scrapers
   module Members
     class ExtractList < ParliamentExtractor
       HOST = "www.parl.gc.ca"
-      PATH = "MembersOfParliament/MainMPsCompleteList.aspx"
+      PATH = "/MembersOfParliament/MainMPsCompleteList.aspx"
       QUERY_STRING = "TimePeriod=Current&Language=E"
 
       def output_file
@@ -12,7 +12,7 @@ module Scrapers
       private
 
       def url
-        "/#{PATH}?#{QUERY_STRING}"
+        "#{PATH}?#{QUERY_STRING}"
       end
     end
   end

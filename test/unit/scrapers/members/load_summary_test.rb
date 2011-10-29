@@ -2,6 +2,7 @@ require 'test_helper'
 
 class Scrapers::Members::LoadTest < ActiveSupport::TestCase
   {
+    "parl_gc_id" => "99",
     "parl_gc_constituency_id" => "10",
     "name" => "Foo Name",
     "email" => "foo@gov.ca",
@@ -18,6 +19,26 @@ class Scrapers::Members::LoadTest < ActiveSupport::TestCase
     define_method "test_#{attr}_attribute" do
       assert_equal value, Scrapers::Members::LoadSummary.new( { attr => value } ).run.send(attr.to_sym)
     end
+  end
+
+  def test_new_mp_record_is_created
+    assert_equal 0, Mp.count
+    Scrapers::Members::LoadSummary.new( { "parl_gc_id" => "1" } ).run
+    assert_equal 1, Mp.count
+  end
+
+  def test_existing_mp_record_is_not_recreated
+    mp = Factory(:mp, :parl_gc_id => "99")
+
+    assert_equal 1, Mp.count
+    Scrapers::Members::LoadSummary.new( { "parl_gc_id" => "99" } ).run
+    assert_equal 1, Mp.count
+  end
+
+  def test_attributes_are_updated
+    Factory(:mp, :parl_gc_id => "99", :name => "Shingai Shoniwa")
+    mp = Scrapers::Members::LoadSummary.new( { "parl_gc_id" => "99", "name" => "Janelle Monae" } ).run
+    assert_equal "Janelle Monae", mp.name
   end
 
   def test_invalid_attribute_does_not_raise_error
@@ -42,20 +63,6 @@ class Scrapers::Members::LoadTest < ActiveSupport::TestCase
 
   def test_invalid_province_attribute
     assert_nil Scrapers::Members::LoadSummary.new( { "province" => "New Yaulk" } ).run.province
-  end
-
-  def test_already_existing_mp
-    mp = Factory(:mp, :parl_gc_id => "99")
-
-    assert_equal 1, Mp.count
-    Scrapers::Members::LoadSummary.new( { "parl_gc_id" => "99" } ).run
-    assert_equal 1, Mp.count
-  end
-
-  def test_new_mp
-    assert_equal 0, Mp.count
-    Scrapers::Members::LoadSummary.new( { "parl_gc_id" => "99" } ).run
-    assert_equal 1, Mp.count
   end
 end
 

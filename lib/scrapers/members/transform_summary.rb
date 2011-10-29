@@ -11,6 +11,7 @@ module Scrapers
           h["parl_gc_id"] = parl_gc_id
           h["parl_gc_constituency_id"] = parl_gc_constituency_id
           h["party"] = doc.at('//a[@id$=_hlCaucusWebSite]').try(:inner_text)
+          h["province"] = doc.at('//*[@id$=_lblProvinceData]').try(:inner_text)
           h["name"] = doc.at('//*[@id$=_lblMPNameData]').try(:inner_text)
           h["email"] = doc.at('//*[@id$=_hlEMail]').try(:inner_text)
           h["website"] = doc.at('//*[@id$=_hlWebSite]').try(:[], :href)

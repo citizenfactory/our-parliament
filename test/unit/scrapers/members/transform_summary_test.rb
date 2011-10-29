@@ -19,6 +19,10 @@ class Scrapers::Members::TransformSummaryWithValidDataTest < ActiveSupport::Test
     assert_equal "Conservative", @@data["party"]
   end
 
+  def test_province
+    assert_equal "Ontario", @@data["province"]
+  end
+
   def test_name
     assert_equal "Mark Adler", @@data["name"]
   end
@@ -75,6 +79,7 @@ class Scrapers::Members::TransformSummaryWithInvalidDataTest < ActiveSupport::Te
     "parl_gc_id",
     "parl_gc_constituency_id",
     "party",
+    "province",
     "name",
     "email",
     "website",
