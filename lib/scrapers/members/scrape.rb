@@ -11,7 +11,9 @@ module Scrapers
         end
 
         def members(ids)
+          count = 1
           ids.each do |id|
+            puts "#{count} of #{ids.length} - MP #{id}"
             extractor = Scrapers::Members::ExtractSummary.new(id)
             extractor.run
             transformer = Scrapers::Members::TransformSummary.new(extractor.output_file)
@@ -21,6 +23,8 @@ module Scrapers
             if mp.errors.present?
               puts mp.errors.full_messages
             end
+
+            count += 1
           end
         end
       end
