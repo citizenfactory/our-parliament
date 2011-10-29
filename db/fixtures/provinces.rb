@@ -9,7 +9,7 @@ Province.seed_many(:abbreviation, [
   { :abbreviation => "NU", :name_en => "Nunavut", :name_fr => "Nunavut" },
   { :abbreviation => "ON", :name_en => "Ontario", :name_fr => "Ontario" },
   { :abbreviation => "PE", :name_en => "Prince Edward Island", :name_fr => "Île-du-Prince-Édouard" },
-  { :abbreviation => "QC", :name_en => "Quebec", :name_fr => "Québec" },
+  { :abbreviation => "QC", :name_en => "Québec", :name_fr => "Québec" },
   { :abbreviation => "SK", :name_en => "Saskatchewan", :name_fr => "Saskatchewan" },
   { :abbreviation => "YT", :name_en => "Yukon", :name_fr => "Yukon" }
 ])
