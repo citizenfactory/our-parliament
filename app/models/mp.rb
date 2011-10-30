@@ -40,14 +40,6 @@ class Mp < ActiveRecord::Base
   named_scope :active, :conditions => {:active => true}
   
   class << self
-    def get_list
-      list = open("http://www.parl.gc.ca/MembersOfParliament/MainMPsCompleteList.aspx?TimePeriod=Current&Language=E")
-      list.each_line do |line|
-        m = line.match(/ProfileMP\.aspx\?Key=(\d+)/)
-        Mp.create(:parl_gc_id => m[1]) if m && !Mp.find_by_parl_gc_id(m[1])
-      end
-    end
-    
     def find_by_constituency_name_and_last_name(constituency_name, lastname)
       mps = find :all, :include => [:riding], :conditions => {'ridings.name_en' => constituency_name}
       mps.detect {|mp| mp.name =~ /#{lastname}$/}
@@ -71,41 +63,6 @@ class Mp < ActiveRecord::Base
     h[I18n.t('members.weblink.twitter', :member_name => name)]          = "http://twitter.com/#{twitter}" unless twitter.blank?
     h[I18n.t('members.weblink.personal', :member_name => name)]         = website                         unless website.blank?
     h
-  end
-
-  def download
-    `curl \"http://www.parl.gc.ca/MembersOfParliament/ProfileMP.aspx?Key=#{parl_gc_id}&Language=E\" > #{download_path}`
-  end
-  
-  def downloaded?
-    File.exists? download_path
-  end
-
-  def download_path
-    File.expand_path File.join(Rails.root, "tmp/mp_#{parl_gc_id}")
-  end
-
-  def extract_summary_info #@todo constituency_name, constituency_province no longer exist
-    doc = Hpricot(File.read(download_path))
-    self.parl_gc_constituency_id = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_TombstoneContent_TombstoneContent_ucHeaderMP_hlConstituencyProfile"]')[0].attributes['href'].match(/Key=(\d+)/)[1]
-    self.constituency_name = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_TombstoneContent_TombstoneContent_ucHeaderMP_hlConstituencyProfile"]').innerHTML
-    self.party = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_TombstoneContent_TombstoneContent_ucHeaderMP_hlCaucusWebSite"]').innerHTML
-    self.name = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_TombstoneContent_TombstoneContent_ucHeaderMP_lblMPNameData"]').innerHTML
-    self.email = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_DetailsContent_DetailsContent__ctl0_hlEMail"]').innerHTML
-    website = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_DetailsContent_DetailsContent__ctl0_hlWebSite"]')
-    self.website = website[0].attributes['href'] if website[0]
-    self.parliamentary_phone = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_DetailsContent_DetailsContent__ctl0_lblTelephoneData"]').innerHTML
-    self.parliamentary_fax = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_DetailsContent_DetailsContent__ctl0_lblFaxData"]').innerHTML
-    self.preferred_language = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_DetailsContent_DetailsContent__ctl0_lblPrefLanguageData"]').innerHTML
-
-    const_info = doc.search('//*[@id="MasterPage_MasterPage_BodyContent_PageContent_Content_DetailsContent_DetailsContent__ctl0_divConstituencyOffices"]/table/tr/td')
-    self.constituency_address = const_info[0].innerHTML.gsub(/, *$/, '')
-    self.constituency_city, self.constituency_province = const_info[1].innerHTML.split(', ')
-    self.constituency_postal_code = const_info[2].innerHTML
-    self.constituency_phone = const_info[4].innerHTML.gsub(/Telephone: /, '')
-    self.constituency_fax = const_info[5].innerHTML.gsub(/Fax: /, '')
-
-    self.save
   end
   
   def scrape_edid #@todo ed_id is now riding_id (a foreign key)

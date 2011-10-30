@@ -56,38 +56,24 @@ namespace :scrape do
       senator.save! unless Senator.find_by_name(senator.name)
     end
   end
-  
-  
-  desc "retrieve mp list"
-  task :mp_list => :environment do
-    Mp.get_list
-  end
-  
-  desc "download all mp data"
-  task :spider => :environment do
-    (Mp.find :all).each do |mp|
-      if ! mp.downloaded?
-        mp.download
-        puts "downloaded: " + mp.parl_gc_id.to_s
-      end
-    end
-  end
-  
-  desc "extract all downloaded mp data"
-  task :extract => :spider do
-    (Mp.find :all).each do |mp|
-      mp.extract_summary_info
-      
+
+  desc "Run the ETL for all members"
+  task :members => :environment do
+    members = Scrapers::Members::Scrape.member_list
+    Scrapers::Members::Scrape.members( members )
+
+    # @TODO: Remove this once we've got riding scraping working
+    #(Mp.find :all).each do |mp|
       # YUCK: I'd like separate spidering and extraction tasks, but ed_id was tedious
       # since this runs so rarely, I'm leaving it as is
       #@todo ed_id is now riding_id (a foreign key)
-      if mp.ed_id.nil?
-        mp.scrape_edid
-        puts "resolved ED: #{mp.ed_id}"
-      end
-    end
+      #if mp.ed_id.nil?
+        #mp.scrape_edid
+        #puts "resolved ED: #{mp.ed_id}"
+      #end
+    #end
   end
-  
+
   desc "get votes list"
   task :vote_list => :environment do
     parliament = ENV["PARLIAMENT"] || Vote.maximum(:parliament)
