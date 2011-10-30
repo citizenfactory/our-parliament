@@ -23,6 +23,13 @@ class Scrapers::Members::TransformSummaryWithValidDataTest < ActiveSupport::Test
     assert_equal "Ontario", @@data["province"]
   end
 
+  def test_province_with_special_characters
+    File.stubs(:read).returns("<span id='_lblProvinceData'>Québec</span>")
+
+    data = Scrapers::Members::TransformSummary.new("foo.html").run
+    assert_equal "Quebec", data["province"]
+  end
+
   def test_name
     assert_equal "Mark Adler", @@data["name"]
   end
