@@ -48,6 +48,15 @@ class Scrapers::Members::LoadSummaryAttributesTest < ActiveSupport::TestCase
   def test_invalid_province_attribute
     assert_nil Scrapers::Members::LoadSummary.new( { "province" => "New Yaulk" } ).run.province
   end
+
+  def test_valid_riding_attribute
+    riding = Factory(:riding, :parl_gc_constituency_id => "99")
+    assert_equal riding, Scrapers::Members::LoadSummary.new( { "parl_gc_constituency_id" => "99" } ).run.riding
+  end
+
+  def test_invalid_riding_attribute
+    assert_nil Scrapers::Members::LoadSummary.new( { "parl_gc_constituency_id" => "fake id" } ).run.riding
+  end
 end
 
 class Scrapers::Members::LoadSummaryInteractionTest < ActiveSupport::TestCase

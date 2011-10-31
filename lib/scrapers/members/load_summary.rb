@@ -27,12 +27,10 @@ module Scrapers
       def run
         mp = Mp.find_or_initialize_by_parl_gc_id( @attributes["parl_gc_id"] )
         mp.attributes = @attributes.slice(*SIMPLE_ATTRIBUTES)
+
         mp.party = Party.find_by_name_en(@attributes["party"])
         mp.province = Province.find_by_name_en(@attributes["province"])
-
-        # Look at http://www.parl.gc.ca/MembersOfParliament/MainConstituenciesCompleteList.aspx?TimePeriod=Current&Language=E
-        # for a better way of building the constituency / electoral district / riding list, and split it out into it's own ETL process
-        #mp.riding # currently edid
+        mp.riding = Riding.find_by_parl_gc_constituency_id( @attributes["parl_gc_constituency_id"] )
 
         if mp.save == false
           logger.error "Failed to save MP: #{mp.errors.full_messages}"

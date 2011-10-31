@@ -50,8 +50,7 @@ module Scrapers
         doc.at('//a[@id$=_hlConstituencyProfile]').
           try(:[], :href).
           try(:match, /Key=(\d+)/).
-          try(:[], 1).
-          try(:to_i)
+          try(:[], 1)
       end
     end
   end

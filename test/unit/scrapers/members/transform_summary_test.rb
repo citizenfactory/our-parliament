@@ -12,7 +12,7 @@ class Scrapers::Members::TransformSummaryWithValidDataTest < ActiveSupport::Test
   end
 
   def test_parl_gc_constituency_id
-    assert_equal 488, @@data["parl_gc_constituency_id"]
+    assert_equal "488", @@data["parl_gc_constituency_id"]
   end
 
   def test_party

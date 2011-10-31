@@ -48,30 +48,24 @@ def scrape_legisinfo(vote)
 end
 
 namespace :scrape do
+  desc "Run the riding scraper"
+  task :ridings => :environment do
+    Scrapers::Ridings::Scrape.ridings
+  end
+
   desc "retrieve senator list"
   task :senators => :environment do
     senators = Senator.scrape_list
-    
+
     senators.each do |senator|
       senator.save! unless Senator.find_by_name(senator.name)
     end
   end
 
-  desc "Run the ETL for all members"
+  desc "Run the members scraper"
   task :members => :environment do
     members = Scrapers::Members::Scrape.member_list
     Scrapers::Members::Scrape.members( members )
-
-    # @TODO: Remove this once we've got riding scraping working
-    #(Mp.find :all).each do |mp|
-      # YUCK: I'd like separate spidering and extraction tasks, but ed_id was tedious
-      # since this runs so rarely, I'm leaving it as is
-      #@todo ed_id is now riding_id (a foreign key)
-      #if mp.ed_id.nil?
-        #mp.scrape_edid
-        #puts "resolved ED: #{mp.ed_id}"
-      #end
-    #end
   end
 
   desc "get votes list"
