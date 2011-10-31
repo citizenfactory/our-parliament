@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111019014757) do
+ActiveRecord::Schema.define(:version => 20111030172131) do
 
   create_table "committee_memberships", :force => true do |t|
     t.integer "mp_id"
@@ -177,7 +177,10 @@ ActiveRecord::Schema.define(:version => 20111019014757) do
     t.integer  "province_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "parl_gc_constituency_id", :null => false
   end
+
+  add_index "ridings", ["parl_gc_constituency_id"], :name => "index_ridings_on_parl_gc_constituency_id", :unique => true
 
   create_table "senators", :force => true do |t|
     t.string   "name"
