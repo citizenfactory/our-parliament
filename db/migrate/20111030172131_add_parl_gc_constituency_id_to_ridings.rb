@@ -1,6 +1,6 @@
 class AddParlGcConstituencyIdToRidings < ActiveRecord::Migration
   def self.up
-    add_column :ridings, :parl_gc_constituency_id, :string, :null => false
+    add_column :ridings, :parl_gc_constituency_id, :string
     add_index :ridings, :parl_gc_constituency_id, :unique => true
   end
 

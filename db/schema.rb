@@ -160,7 +160,7 @@ ActiveRecord::Schema.define(:version => 20111030172131) do
     t.string   "name_fr"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "abbreviation", :limit => 2, :null => false
+    t.string   "abbreviation", :limit => 2
   end
 
   create_table "recorded_votes", :force => true do |t|
@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(:version => 20111030172131) do
     t.integer  "province_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "parl_gc_constituency_id", :null => false
+    t.string   "parl_gc_constituency_id"
   end
 
   add_index "ridings", ["parl_gc_constituency_id"], :name => "index_ridings_on_parl_gc_constituency_id", :unique => true
