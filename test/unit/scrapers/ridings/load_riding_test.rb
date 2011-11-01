@@ -33,6 +33,14 @@ class Scrapers::Ridings::LoadRidingInteractionTest < ActiveSupport::TestCase
     assert_equal 1, Riding.count
   end
 
+  def test_existing_riding_with_no_parl_gc_constituency_id_is_not_recreated
+    Factory(:riding, :name_en => "Desnethé—Missinippi—Churchill River", :parl_gc_constituency_id => nil )
+
+    assert_equal 1, Riding.count
+    Scrapers::Ridings::LoadRiding.new( { "parl_gc_constituency_id" => "99", "name_en" => "Desnethé—Missinippi—Churchill River" } ).run
+    assert_equal 1, Riding.count
+  end
+
   def test_attributes_are_updated
     Factory(:riding, :parl_gc_constituency_id => "99", :name_en => "William Henry Rutherford Smithwick III")
     riding = Scrapers::Ridings::LoadRiding.new( { "parl_gc_constituency_id" => "99", "name_en" => "Will Smithwick" } ).run
