@@ -1,5 +1,5 @@
 Party.seed_many(:name_en, [
-  { :name_en => "AAEV Paty of Canada", :name_fr => "AAEV Party of Canada", :image => nil },
+  { :name_en => "AAEV Party of Canada", :name_fr => "AAEV Party of Canada", :image => nil },
   { :name_en => "CAP", :name_fr => "PAC", :image => nil },
   { :name_en => "Christian Heritage Party", :name_fr => "Parti de l'Héritage Chrétien", :image => nil },
   { :name_en => "Communist", :name_fr => "Communiste", :image => nil },
