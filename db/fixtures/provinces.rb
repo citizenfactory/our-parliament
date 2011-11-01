@@ -1,4 +1,4 @@
-Province.seed_many(:abbreviation, [
+Province.seed_many(:name_en, [
   { :abbreviation => "AB", :name_en => "Alberta", :name_fr => "Alberta" },
   { :abbreviation => "BC", :name_en => "British Columbia", :name_fr => "Colombie-Britannique" },
   { :abbreviation => "MB", :name_en => "Manitoba", :name_fr => "Manitoba" },
