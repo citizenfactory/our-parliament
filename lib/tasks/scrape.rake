@@ -64,6 +64,8 @@ namespace :scrape do
 
   desc "Run the members scraper"
   task :members => :environment do
+    Scrapers::Members::Scrape.disable_inactive_members
+
     members = Scrapers::Members::Scrape.member_list
     Scrapers::Members::Scrape.members( members )
   end
