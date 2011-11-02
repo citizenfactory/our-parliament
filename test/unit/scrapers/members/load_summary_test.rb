@@ -31,6 +31,10 @@ class Scrapers::Members::LoadSummaryAttributesTest < ActiveSupport::TestCase
     end
   end
 
+  def test_active
+    assert_equal true, Scrapers::Members::LoadSummary.new( {} ).run.active
+  end
+
   def test_valid_party_attribute
     party = Factory(:party, :name => "Conservative")
     assert_equal party, Scrapers::Members::LoadSummary.new( { "party" => "Conservative" } ).run.party
