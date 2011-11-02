@@ -18,7 +18,7 @@
   <a name="<%= province.name.underscore %>"></a>
   <h3><%= province.name %></h3>
   <ul class="profiles_list">
-    <%= render :partial => 'shared/member', :collection => province.mps.sort_by(&:id) %>
+    <%= render :partial => 'shared/member', :collection => province.mps.active.sort_by(&:id) %>
   </ul>
 <% end %>
 
