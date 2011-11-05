@@ -13,7 +13,7 @@ class Scrapers::ParliamentExtractorConfigurationTest < ActiveSupport::TestCase
   def test_default_stale_at
     now = Time.current
     Time.stubs(:current).returns(now)
-    assert_equal (now - 7.days), Scrapers::ParliamentExtractor.new.stale_at
+    assert_equal (now - 6.days), Scrapers::ParliamentExtractor.new.stale_at
   end
 
   def test_stale_file_by_time

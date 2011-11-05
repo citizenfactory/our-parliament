@@ -9,7 +9,7 @@ module Scrapers
     def initialize(options = {})
       @logger = options[:logger] || Rails.logger
       @output_dir = options[:output_dir] || File.join(Rails.root, "tmp", "data")
-      @stale_at = options[:stale_at] || 7.days.ago
+      @stale_at = options[:stale_at] || 6.days.ago
     end
 
     def run
