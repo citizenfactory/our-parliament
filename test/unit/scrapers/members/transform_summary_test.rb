@@ -34,6 +34,20 @@ class Scrapers::Members::TransformSummaryWithValidDataTest < ActiveSupport::Test
     assert_equal "Mark Adler", @@data["name"]
   end
 
+  def test_remove_hon_from_name
+    File.stubs(:read).returns("<span id='_lblMPNameData'>Hon. Diane Ablonczy</span>")
+
+    data = Scrapers::Members::TransformSummary.new("foo.html").run
+    assert_equal "Diane Ablonczy", data["name"]
+  end
+
+  def test_remove_right_hon_from_name
+    File.stubs(:read).returns("<span id='_lblMPNameData'>Right Hon. Stephen Harper</span>")
+
+    data = Scrapers::Members::TransformSummary.new("foo.html").run
+    assert_equal "Stephen Harper", data["name"]
+  end
+
   def test_email
     assert_equal "Mark.Adler@parl.gc.ca", @@data["email"]
   end
