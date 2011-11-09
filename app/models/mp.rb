@@ -2,6 +2,8 @@ require 'hpricot'
 require 'open-uri'
 
 class Mp < ActiveRecord::Base
+  SIMILARITY_COLUMNS = [ :name, :riding_id ]
+
   index do
     parl_gc_id
     parl_gc_constituency_id
@@ -36,13 +38,29 @@ class Mp < ActiveRecord::Base
   belongs_to :riding, :include => "province"
   belongs_to :party
   has_and_belongs_to_many :news_articles, :join_table => 'mps_news_articles'
-  
+
   named_scope :active, :conditions => {:active => true}
-  
+
   class << self
     def find_by_constituency_name_and_last_name(constituency_name, lastname)
       mps = find :all, :include => [:riding], :conditions => {'ridings.name_en' => constituency_name}
       mps.detect {|mp| mp.name =~ /#{lastname}$/}
+    end
+
+    def similar
+      md5 = "MD5(#{SIMILARITY_COLUMNS.join(' || ')})"
+      all(
+        :select => "*, similarity_hash, position, count",
+        :from => "(
+          SELECT *, #{md5} AS similarity_hash, RANK() OVER w AS position, COUNT(*) OVER w AS count
+          FROM mps
+          WINDOW w AS (PARTITION BY #{md5} ORDER BY active DESC, parl_gc_id DESC RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+        ) AS t",
+        :conditions => "
+          similarity_hash IN (SELECT #{md5} FROM #{self.table_name} WHERE active = false) AND
+          count >= 2 AND
+          position <= 2"
+      )
     end
   end
   
