@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :bills
 
   map.namespace :admin do |admin|
-    admin.resources :members
+    admin.resources :members, :collection => { :similar => :get }
     admin.resources :senators
   end
 

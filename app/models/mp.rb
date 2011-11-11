@@ -2,6 +2,7 @@ require 'hpricot'
 require 'open-uri'
 
 class Mp < ActiveRecord::Base
+  USER_EDITABLE_ATTRIBUTES = [ 'image', 'date_of_birth', 'place_of_birth', 'wikipedia', 'wikipedia_riding', 'facebook', 'twitter' ]
   SIMILARITY_COLUMNS = [ :name, :riding_id ]
 
   index do
@@ -17,12 +18,13 @@ class Mp < ActiveRecord::Base
     constituency_postal_code
     constituency_phone
     constituency_fax
-  end 
+  end
 
   has_attached_file :image,
                     :styles      => { :medium => "120x120>", :small => "40x40>" },
                     :storage     => :s3,
                     :path        => ":attachment/:id/:style.:extension",
+                    :default_url => "/images/placeholder_photo_:style.gif",
                     :bucket      => 'citizen_factory',
                     :s3_credentials => {:access_key_id => ENV["AWS_ACCESS_KEY_ID"], :secret_access_key => ENV["AWS_SECRET_ACCESS_KEY"]}
 
@@ -60,15 +62,22 @@ class Mp < ActiveRecord::Base
           similarity_hash IN (SELECT #{md5} FROM #{self.table_name} WHERE active = false) AND
           count >= 2 AND
           position <= 2"
-      )
+      ).group_by(&:similarity_hash)
     end
   end
-  
+
+  def merge_user_editable_attributes(attributes)
+    attributes.slice(*USER_EDITABLE_ATTRIBUTES).each do |key, value|
+      key = key.to_sym
+      self[key] = value unless self[key].present?
+    end
+  end
+
   def age
     now = Time.now.utc.to_date
     return date_of_birth ? now.year - date_of_birth.year - (date_of_birth.to_date.change(:year => now.year) > now ? 1 : 0) : nil
   end
-  
+
   def recorded_vote_for(vote)
     recorded_votes.find_by_vote_id(vote.id) || recorded_votes.new
   end
