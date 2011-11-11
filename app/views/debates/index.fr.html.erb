@@ -2,7 +2,7 @@
 
 <% @content_layout = "has_sidebar_right" %>
 
-<p>Tout ce qui se dit dans la Chambre des communes et le Sénat est aussi transcrit, que ce soit lors d’un débat des députés sur un projet de loi ou durant la période de question, lorsque les membres de l’opposition posent des questions aux membres du Cabinet. Tu peux consulter les transcriptions de la session parlementaire actuelle ci-dessous. </p>
+<p>Tout ce qui se dit dans <%= link_to "la Chambre des communes", "http://parl.gc.ca/HousePublications/Publication.aspx?Pub=hansard&Language=F" %> et <%= link_to "le Sénat", "http://parl.gc.ca/ParlBusiness/Senate/Debates/LatestDebates.asp?Language=F" %> est aussi transcrit, que ce soit lors d’un débat des députés sur un projet de loi ou durant la période de question, lorsque les membres de l’opposition posent des questions aux membres du Cabinet. Tu peux consulter les transcriptions de la session parlementaire actuelle ci-dessous. </p>
 
 <% for year in @years %>
 	<h3>Débats de la Chambre, <%= year %></h3>
