@@ -7,7 +7,7 @@ class Admin::MembersController < ApplicationController
 
   def similar
     @mps = Mp.similar.collect do |_, (active, inactive)|
-      active.merge_user_editable_attributes(inactive.attributes)
+      active.merge(inactive)
       active
     end
 

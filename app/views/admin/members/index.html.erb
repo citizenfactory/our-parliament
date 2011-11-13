@@ -1,25 +1,32 @@
 <% @title = 'MP Spreadsheet view' %>
 
-<%= form_tag({:action => 'update'})  %>
+<%= link_to "Assign Attributes by Member Similarity", similar_admin_members_path %>
 
+<%= form_tag(:action => 'update') %>
 <table>
-  <th>
-    <tr>
-      <td>MP</td>
-      <td>Twitter</td>
-      <td>Facebook</td>
-      <td>Wikipedia (mp)</td>
-      <td>Wikipedia (riding)</td>
-    </tr>
-  </th>
+  <tr>
+    <th>MP</th>
+    <th>Date Of Birth</th>
+    <th>Twitter</th>
+    <th>Facebook</th>
+    <th>Wikipedia (mp)</th>
+    <th>Wikipedia (riding)</th>
+    <th>Image</th>
+  </tr>
   <% @mps.each do |mp| %>
     <% fields_for "mps[#{mp.id}]", mp, {:builder => ActionView::Helpers::FormBuilder} do |f| %>
       <tr>
         <td><%= link_to mp.name, edit_member_path(mp) %></td>
+        <td><%= f.text_field :date_of_birth, :size => 12 %></td>
         <td><%= f.text_field :twitter, :size => 12  %></td>
         <td><%= f.text_field :facebook  %></td>
         <td><%= f.text_field :wikipedia  %></td>
         <td><%= f.text_field :wikipedia_riding  %></td>
+        <% if mp.upload_image_url %>
+          <td><%= f.check_box :upload_image_url, {:checked => "checked"}, mp.upload_image_url  %><%= image_tag mp.upload_image_url, :width => 25, :height => 25 %></td>
+        <% else %>
+          <td><%= image_tag mp.image(:small) %></td>
+        <% end %>
       </tr>
     <% end %>
   <% end %>

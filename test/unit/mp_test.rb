@@ -29,24 +29,24 @@ class MpTest < ActiveSupport::TestCase
     end
   end
 
-  context "#merge_user_editable_attributes" do
+  context "#merge" do
     should "update attributes that aren't already present" do
       mp = Mp.new
-      mp.merge_user_editable_attributes({ "wikipedia" => "wiki foo" })
+      mp.merge( Mp.new("wikipedia" => "wiki foo") )
 
       assert_equal "wiki foo", mp.wikipedia
     end
 
     should "not overwrite an existing attribute" do
       mp = Mp.new(:wikipedia => "wiki foo")
-      mp.merge_user_editable_attributes({ "wikipedia" => "wiki bar" })
+      mp.merge( Mp.new("wikipedia" => "wiki bar") )
 
       assert_equal "wiki foo", mp.wikipedia
     end
 
     should "not overwrite attributes that are not user editable" do
       mp = Mp.new
-      mp.merge_user_editable_attributes({ "name" => "Foo" })
+      mp.merge( Mp.new("name" => "Foo") )
 
       assert_nil mp.name
     end

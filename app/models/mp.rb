@@ -2,8 +2,11 @@ require 'hpricot'
 require 'open-uri'
 
 class Mp < ActiveRecord::Base
-  USER_EDITABLE_ATTRIBUTES = [ 'image', 'date_of_birth', 'place_of_birth', 'wikipedia', 'wikipedia_riding', 'facebook', 'twitter' ]
   SIMILARITY_COLUMNS = [ :name, :riding_id ]
+
+  attr_accessor :upload_image_url
+
+  before_validation :download_remote_image, :if => Proc.new { |mp| mp.upload_image_url.present? }
 
   index do
     parl_gc_id
@@ -66,11 +69,13 @@ class Mp < ActiveRecord::Base
     end
   end
 
-  def merge_user_editable_attributes(attributes)
-    attributes.slice(*USER_EDITABLE_ATTRIBUTES).each do |key, value|
-      key = key.to_sym
-      self[key] = value unless self[key].present?
+  def merge(mp)
+    basic_attributes = [ :date_of_birth, :place_of_birth, :wikipedia, :wikipedia_riding, :facebook, :twitter ]
+    basic_attributes.each do |attr|
+      self.send("#{attr}=", mp.send(attr)) unless self.send(attr).present?
     end
+
+    self.upload_image_url = mp.image.url
   end
 
   def age
@@ -122,10 +127,16 @@ class Mp < ActiveRecord::Base
     end
     return tweets
   end
-  
+
   def fetch_news_articles
     articles = []
     articles = GoogleNews.search(name + ' AND ("MP" OR "Member of Parliament") location:Canada')
     return articles
+  end
+
+  private
+
+  def download_remote_image
+    self.image = open(upload_image_url)
   end
 end
