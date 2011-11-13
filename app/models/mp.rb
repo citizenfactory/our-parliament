@@ -53,19 +53,26 @@ class Mp < ActiveRecord::Base
     end
 
     def similar
-      md5 = "MD5(#{SIMILARITY_COLUMNS.join(' || ')})"
       all(
-        :select => "*, similarity_hash, position, count",
+        :select => "mps.*, #{similarity_hash('mps')} AS similarity_hash",
         :from => "(
-          SELECT *, #{md5} AS similarity_hash, RANK() OVER w AS position, COUNT(*) OVER w AS count
-          FROM mps
-          WINDOW w AS (PARTITION BY #{md5} ORDER BY active DESC, parl_gc_id DESC RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+          SELECT name, riding_id, active, MAX(parl_gc_id) AS parl_gc_id
+          FROM mps AS mp1
+          WHERE (
+            SELECT COUNT(*)
+            FROM mps AS mp2
+            WHERE #{similarity_hash('mp2')} = #{similarity_hash('mp1')}
+          ) > 1
+          GROUP BY name, riding_id, active
         ) AS t",
-        :conditions => "
-          similarity_hash IN (SELECT #{md5} FROM #{self.table_name} WHERE active = false) AND
-          count >= 2 AND
-          position <= 2"
+        :joins => "INNER JOIN mps ON mps.parl_gc_id = t.parl_gc_id",
+        :order => "t.name DESC, t.riding_id, t.active DESC"
       ).group_by(&:similarity_hash)
+    end
+
+    def similarity_hash(prefix)
+      columns = SIMILARITY_COLUMNS.map { |column| "#{prefix}.#{column}" }
+      "MD5(#{columns.join(' || ')})"
     end
   end
 
