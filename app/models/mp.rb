@@ -82,7 +82,7 @@ class Mp < ActiveRecord::Base
       self.send("#{attr}=", mp.send(attr)) unless self.send(attr).present?
     end
 
-    self.upload_image_url = mp.image.url
+    self.upload_image_url = mp.image.url if default_image? && !mp.default_image?
   end
 
   def age
@@ -139,6 +139,10 @@ class Mp < ActiveRecord::Base
     articles = []
     articles = GoogleNews.search(name + ' AND ("MP" OR "Member of Parliament") location:Canada')
     return articles
+  end
+
+  def default_image?
+    image.url(:original) == '/images/placeholder_photo_original.gif'
   end
 
   private

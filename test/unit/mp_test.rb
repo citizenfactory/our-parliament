@@ -50,6 +50,21 @@ class MpTest < ActiveSupport::TestCase
 
       assert_nil mp.name
     end
+
+    should "not merge the upload_image_url if there's already an image" do
+      mp = Mp.new
+      mp.image.expects(:url).with(:original).returns("/some/image.gif")
+      mp.merge( Mp.new )
+
+      assert_nil mp.upload_image_url
+    end
+
+    should "not set the upload_image_url to the default image" do
+      mp = Mp.new
+      mp.merge( Mp.new )
+
+      assert_nil mp.upload_image_url
+    end
   end
 
   def test_link_construction
