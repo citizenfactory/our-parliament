@@ -28,8 +28,8 @@ module Scrapers
         mp = Mp.find_or_initialize_by_parl_gc_id( @attributes["parl_gc_id"] )
         mp.attributes = @attributes.slice(*SIMPLE_ATTRIBUTES)
 
-        #mp.active = true
-        mp.party = Party.find_by_name_en(@attributes["party"])
+        mp.active = true
+        mp.party = Party.lookup(@attributes["party"]) if @attributes["party"]
         mp.province = Province.find_by_name_en(@attributes["province"])
         mp.riding = Riding.find_by_parl_gc_constituency_id( @attributes["parl_gc_constituency_id"] )
 
