@@ -8,17 +8,17 @@
  
 <div id="groups" class="block">
   <ul>
-    <% Province.find(:all).each do |province| %>
+    <% @provinces.each do |province| %>
       <li><a href="#<%= province.name.underscore %>"><%= province.name %></a></li>
     <% end %>
   </ul>
 </div>
 
-<% Province.find(:all).each do |province| %>
+<% @provinces.each do |province| %>
   <a name="<%= province.name.underscore %>"></a>
   <h3><%= province.name %></h3>
   <ul class="profiles_list">
-    <%= render :partial => 'shared/member', :collection => province.mps.active.sort_by(&:id) %>
+    <%= render :partial => 'shared/member', :collection => @mps_by_province_id[province.id] %>
   </ul>
 <% end %>
 
