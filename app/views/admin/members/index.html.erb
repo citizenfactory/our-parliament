@@ -1,6 +1,12 @@
 <% @title = 'MP Spreadsheet view' %>
 
-<%= link_to "Assign Attributes by Member Similarity", similar_admin_members_path %>
+<p>
+<% if controller.action_name == 'similar' %>
+  <%= link_to "Spread Sheet View", admin_members_path %>
+<% else %>
+  <%= link_to "Assign Attributes by Member Similarity", similar_admin_members_path %>
+<% end %>
+</p>
 
 <%= form_tag(:action => 'update') %>
 <table>
