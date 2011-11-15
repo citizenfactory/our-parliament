@@ -25,7 +25,7 @@ class SearchController < ApplicationController
       @senators = [*Senator.find_all_by_province_id(province.id)]
       @edids     = find_edids_by_postal_code(@query)
       if not @edids.empty?
-        @mps    = [*Mp.find_all_by_riding_id(@edids)]
+        @mps    = [*Mp.active.find_all_by_riding_id(@edids)]
       end
     end
 
