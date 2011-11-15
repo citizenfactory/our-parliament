@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Scrapers::Ridings::TransformListWithValidDataTest < ActiveSupport::TestCase
+class Scrapers::Ridings::TransformListTest < ActiveSupport::TestCase
   def self.startup
     file = File.join(Rails.root, "test", "fixtures", "ridings_list.html")
     transformer = Scrapers::Ridings::TransformList.new(file)
@@ -12,15 +12,7 @@ class Scrapers::Ridings::TransformListWithValidDataTest < ActiveSupport::TestCas
   end
 
   def test_parl_gc_constituency_id
-    assert_equal "538", @@data.first["parl_gc_constituency_id"]
-  end
-
-  def test_name_en
-    assert_equal "Abbotsford", @@data.first["name_en"]
-  end
-
-  def test_name_fr
-    assert_equal "Abbotsford", @@data.first["name_fr"]
+    assert_equal "538", @@data.first
   end
 
   def test_invalid_data

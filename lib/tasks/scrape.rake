@@ -50,7 +50,8 @@ end
 namespace :scrape do
   desc "Run the riding scraper"
   task :ridings => :environment do
-    Scrapers::Ridings::Scrape.ridings
+    ridings = Scrapers::Ridings::Scrape.riding_list
+    Scrapers::Ridings::Scrape.ridings( ridings )
   end
 
   desc "retrieve senator list"

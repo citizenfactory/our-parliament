@@ -8,20 +8,11 @@ module Scrapers
 
       def run
         doc.search('//table[@id$=_grdCompleteList]/tr:gt(0)').map do |row|
-          {}.tap do |h|
-            parl_gc_constituency_id = row.at('//td[1]/a').
-              try(:[], :href).
-              try(:match, /Key=(\d+)/).
-              try(:[], 1)
-            name = row.at('//td[1]/a').try(:inner_html)
-
-            h["parl_gc_constituency_id"] = parl_gc_constituency_id if parl_gc_constituency_id.present?
-            if name.present?
-              h["name_en"] = name
-              h["name_fr"] = name
-            end
-          end
-        end.reject(&:empty?)
+          row.at('//td[1]/a').
+            try(:[], :href).
+            try(:match, /Key=(\d+)/).
+            try(:[], 1)
+        end.compact
       end
 
       private
