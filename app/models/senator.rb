@@ -10,7 +10,7 @@ class Senator < ActiveRecord::Base
   has_attached_file :image,
                     :styles      => { :medium => "120x120>", :small => "40x40>" },
                     :storage     => :s3,
-                    :path        => ":attachment/:id/:style.:extension",
+                    :path        => ":rails_env/:attachment/:id/:style.:extension",
                     :bucket      => 'citizen_factory',
                     :s3_credentials => {:access_key_id => ENV["AWS_ACCESS_KEY_ID"], :secret_access_key => ENV["AWS_SECRET_ACCESS_KEY"]}
 
