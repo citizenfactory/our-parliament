@@ -43,8 +43,8 @@ class Senator < ActiveRecord::Base
       if File.exists?(fname)
         IO.read(fname)
       else
-        content = f.puts open("http://www.parl.gc.ca/SenatorsMembers/Senate/SenatorsBiography/isenator.asp?Language=E").read
-        File.open(fname, "w") {|f| content}
+        content = open("http://www.parl.gc.ca/SenatorsMembers/Senate/SenatorsBiography/isenator.asp?Language=E").read
+        File.open(fname, "w") {|f| f.write content}
         content
       end
     end
@@ -60,14 +60,23 @@ class Senator < ActiveRecord::Base
     end
     
     def scrape_senator(elem)
-      party = Party.find_by_name_en(clean(elem / (elem.path + "/td[2]")))
-      province = Province.find_by_name_en(clean(elem / (elem.path + "/td[3]")))
-      new :name            => clean(elem / (elem.path + "/td[1]/a")),
+      party = Party.lookup(clean(elem / (elem.path + "/td[2]")))
+      province = Province.lookup(
+                  clean(elem / (elem.path + "/td[3]")).
+                  gsub(/\(.*\)$/, '').
+                  gsub(/\/.*$/, '').
+                  strip)
+
+      senator = find_or_initialize_by_name(clean(elem / (elem.path + "/td[1]/a")))
+      senator.update_attributes(
           :party           => party,
           :province        => province,
           :nomination_date => clean(elem / (elem.path + "/td[4]")),
           :retirement_date => clean(elem / (elem.path + "/td[5]")),
           :appointed_by    => clean(elem / (elem.path + "/td[6]"))
+      )
+
+      senator
     end
     
     private

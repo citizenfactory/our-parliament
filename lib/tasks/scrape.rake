@@ -59,7 +59,7 @@ namespace :scrape do
     senators = Senator.scrape_list
 
     senators.each do |senator|
-      senator.save! unless Senator.find_by_name(senator.name)
+      senator.save!
     end
   end
 

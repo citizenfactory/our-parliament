@@ -1,5 +1,11 @@
 class Party < ActiveRecord::Base
-  ALIASES = { "ndp" => "New Democratic Party"}
+  ALIASES = {
+    "ndp" => "New Democratic Party",
+    "c" => "Conservative",
+    "lib." => "Liberal",
+    "ind." => "Independent",
+    "prog. conser." => "Progressive Conservative"
+  }
 
   translatable_columns :name
   has_many :mps
