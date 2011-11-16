@@ -103,16 +103,11 @@ class Mp < ActiveRecord::Base
     h[I18n.t('members.weblink.personal', :member_name => name)]         = website                         unless website.blank?
     h
   end
-  
-  def scrape_edid #@todo ed_id is now riding_id (a foreign key)
-    constituency_profile = open("http://www.parl.gc.ca/MembersOfParliament/ProfileConstituency.aspx?Key=#{parl_gc_constituency_id}&Language=E").read
-    self.update_attribute(:ed_id,constituency_profile.match(/ED=(\d+)/)[1])
-  end
-  
+
   def hansard_statements
     HansardStatement.find_by_sql(["SELECT * FROM hansard_statements WHERE member_name = ? ORDER BY time DESC;", name])
   end
-  
+
   def fetch_new_tweets
     tweets = []
     url = "http://search.twitter.com/search.json?q=from:#{twitter}"
