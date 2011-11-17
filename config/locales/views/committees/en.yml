@@ -5,4 +5,4 @@ en:
         show:
             title: ""
             subcommittees: "Subcommittees"
-            description: "What do this committee's members do? <a href=\"http://www.parl.gc.ca/{{acronym}}-e\" target=\"_blank\">It's not a mystery</a>, but Citizen Factory doesn't have access to that information yet."
+            description: "What do this committee's members do? Citizen Factory doesn't have access to that information yet, but you can find out at <a href=\"http://www.parl.gc.ca/{{acronym}}-e\" target=\"_blank\">the committee's webpage</a>."
