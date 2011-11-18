@@ -5,4 +5,4 @@ fr:
         show:
             title: ""
             subcommittees: "Sous-comités"
-            description: "Que font les membres de ce comité? La Fabrique citoyenne n'a pas encore accès à cette information, mais tu peux en apprendre au <a href=\"http://www.parl.gc.ca/{{acronym}}-f\" target=\"_blank\">site Web du comité</a>."
+            description: "Que font les membres de ce comité? La Fabrique citoyenne ne peut pas encore accéder à toute cette information, mais tu peux en apprendre au <a href=\"http://www.parl.gc.ca/{{acronym}}-f\" target=\"_blank\">site Web du comité</a>."
