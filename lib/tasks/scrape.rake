@@ -54,13 +54,12 @@ namespace :scrape do
     Scrapers::Ridings::Scrape.ridings( ridings )
   end
 
-  desc "retrieve senator list"
+  desc "Run the senators scraper"
   task :senators => :environment do
-    senators = Senator.scrape_list
+    Scrapers::Senators::Scrape.delete_inactive_senators
 
-    senators.each do |senator|
-      senator.save!
-    end
+    senators = Scrapers::Senators::Scrape.senator_list
+    Scrapers::Senators::Scrape.senators( senators )
   end
 
   desc "Run the members scraper"
