@@ -9,9 +9,9 @@ class Scrapers::Members::ScrapeTest < ActiveSupport::TestCase
     Scrapers::Members::TransformList.expects(:new).with("foo").returns(mock_transformer)
 
     mock_extractor.expects(:run)
-    mock_transformer.expects(:run)
+    mock_transformer.expects(:run).returns(:some_transformed_result)
 
-    Scrapers::Members::Scrape.member_list
+    assert_equal :some_transformed_result, Scrapers::Members::Scrape.member_list
   end
 
   def test_members
