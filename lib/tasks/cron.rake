@@ -7,6 +7,7 @@ task :cron => :environment do
 
     if now.wday == 6 # run on Saturday
       Rake::Task['scrape:members']
+      Rake::Task['scrape:senators']
     end
   end
 
