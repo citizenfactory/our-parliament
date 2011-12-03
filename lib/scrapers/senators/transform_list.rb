@@ -1,6 +1,6 @@
 module Scrapers
   module Senators
-    class TransformList < Scrapers::Transformation
+    class TransformList < Scrapers::Transform
       def run
         doc.search('//html/body/table[2]/tr/td[2]/table/tr').map do |row|
           next if row.to_s !~ /isenator/

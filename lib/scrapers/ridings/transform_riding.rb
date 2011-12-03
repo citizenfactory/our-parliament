@@ -1,11 +1,6 @@
 module Scrapers
   module Ridings
-    class TransformRiding
-      def initialize(filename)
-        @filename = filename
-        @input = File.read(@filename)
-      end
-
+    class TransformRiding < Scrapers::Transform
       def run
         {}.tap do |h|
           h["electoral_district"] = electoral_district
@@ -21,10 +16,6 @@ module Scrapers
       end
 
       private
-
-      def doc
-        @doc ||= Hpricot(@input)
-      end
 
       def parl_gc_constituency_id
         @filename.slice(/riding_(\d+).html$/, 1)

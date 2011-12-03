@@ -1,5 +1,5 @@
 module Scrapers
-  class Transformation
+  class Transform
     def initialize(filename)
       @filename = filename
       @input = File.read(@filename)

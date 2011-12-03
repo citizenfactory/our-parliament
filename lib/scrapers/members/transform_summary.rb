@@ -1,11 +1,6 @@
 module Scrapers
   module Members
-    class TransformSummary
-      def initialize(filename)
-        @filename = filename
-        @input = File.read(@filename)
-      end
-
+    class TransformSummary < Scrapers::Transform
       def run
         {}.tap do |h|
           h["parl_gc_id"] = parl_gc_id
@@ -37,10 +32,6 @@ module Scrapers
       end
 
       private
-
-      def doc
-        @doc ||= Hpricot(@input)
-      end
 
       def parl_gc_id
         @filename.slice(/mp_(\d+).html$/, 1)

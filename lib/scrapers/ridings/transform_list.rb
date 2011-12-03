@@ -1,11 +1,6 @@
 module Scrapers
   module Ridings
-    class TransformList
-      def initialize(filename)
-        @filename = filename
-        @input = File.read(@filename)
-      end
-
+    class TransformList < Scrapers::Transform
       def run
         doc.search('//table[@id$=_grdCompleteList]/tr:gt(0)').map do |row|
           row.at('//td[1]/a').
@@ -13,12 +8,6 @@ module Scrapers
             try(:match, /Key=(\d+)/).
             try(:[], 1)
         end.compact
-      end
-
-      private
-
-      def doc
-        @doc ||= Hpricot(@input)
       end
     end
   end
