@@ -2,7 +2,7 @@ require 'net/http'
 
 module Scrapers
   module Members
-    class ExtractSummary < ParliamentExtractor
+    class ExtractSummary < Scrapers::Extract
       PATH = "/MembersOfParliament/ProfileMP.aspx"
       QUERY_STRING = "Language=E"
 

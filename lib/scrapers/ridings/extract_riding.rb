@@ -1,6 +1,6 @@
 module Scrapers
   module Ridings
-    class ExtractRiding < Scrapers::ParliamentExtractor
+    class ExtractRiding < Scrapers::Extract
       PATH = "/MembersOfParliament/ProfileConstituency.aspx"
       QUERY_STRING = "Language=E"
 

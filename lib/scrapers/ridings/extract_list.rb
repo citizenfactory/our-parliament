@@ -1,6 +1,6 @@
 module Scrapers
   module Ridings
-    class ExtractList < Scrapers::ParliamentExtractor
+    class ExtractList < Scrapers::Extract
       PATH = "/MembersOfParliament/MainConstituenciesCompleteList.aspx"
       QUERY_STRING = "TimePeriod=Current&Language=E"
 

@@ -1,6 +1,6 @@
 module Scrapers
   module Members
-    class ExtractList < ParliamentExtractor
+    class ExtractList < Scrapers::Extract
       PATH = "/MembersOfParliament/MainMPsCompleteList.aspx"
       QUERY_STRING = "TimePeriod=Current&Language=E"
 

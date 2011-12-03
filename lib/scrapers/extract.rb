@@ -1,5 +1,5 @@
 module Scrapers
-  class ParliamentExtractor
+  class Extract
     HOST = "www.parl.gc.ca"
     PATH = ""
     QUERY_STRING = ""
