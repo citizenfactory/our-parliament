@@ -1,6 +1,6 @@
 module Scrapers
   module Members
-    class LoadSummary
+    class LoadSummary < Scrapers::Load
       SIMPLE_ATTRIBUTES = [
         "parl_gc_id",
         "parl_gc_constituency_id",
@@ -16,13 +16,6 @@ module Scrapers
         "constituency_phone",
         "constituency_fax"
       ]
-
-      attr_reader :logger
-
-      def initialize(attributes, options = {})
-        @logger = options[:logger] || Rails.logger
-        @attributes = attributes
-      end
 
       def run
         mp = Mp.find_or_initialize_by_parl_gc_id( @attributes["parl_gc_id"] )

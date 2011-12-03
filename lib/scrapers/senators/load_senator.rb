@@ -1,16 +1,11 @@
 module Scrapers
   module Senators
-    class LoadSenator
+    class LoadSenator < Scrapers::Load
       SIMPLE_ATTRIBUTES = [
         "nomination_date",
         "retirement_date",
         "appointed_by"
       ]
-
-      def initialize(attributes)
-        @logger = Rails.logger
-        @attributes = attributes
-      end
 
       def run
         senator = Senator.find_or_initialize_by_name( @attributes["name"] )

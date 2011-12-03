@@ -1,16 +1,11 @@
 module Scrapers
   module Ridings
-    class LoadRiding
+    class LoadRiding < Scrapers::Load
       SIMPLE_ATTRIBUTES = [
         "parl_gc_constituency_id",
         "name_en",
         "name_fr"
       ]
-
-      def initialize(attributes, options = {})
-        @logger = options[:logger] || Rails.logger
-        @attributes = attributes
-      end
 
       def run
         riding = Riding.find_or_initialize_by_id( @attributes["electoral_district"] )
