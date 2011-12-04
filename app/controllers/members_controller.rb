@@ -77,7 +77,7 @@ class MembersController < ApplicationController
     activity_stream.add_entries(entries)
 
     entries = []
-    articles = @mp.news_articles.last 10
+    articles = @mp.news_articles.all(:order => "date DESC", :limit => 10)
     articles.each { |article|
       entries << ActivityStream::Entry.new(article.date.to_date, article)
     }

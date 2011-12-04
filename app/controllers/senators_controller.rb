@@ -31,7 +31,7 @@ class SenatorsController < ApplicationController
   def build_activity_stream
     activity_stream = ActivityStream.new
     entries = []
-    articles = @senator.news_articles.last 10
+    articles = @senator.news_articles.all(:order => "date DESC", :limit => 10)
     articles.each { |article|
       entries << ActivityStream::Entry.new(article.date.to_date, article)
     }
