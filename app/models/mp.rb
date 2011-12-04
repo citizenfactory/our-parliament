@@ -131,9 +131,22 @@ class Mp < ActiveRecord::Base
   end
 
   def fetch_news_articles
-    articles = []
-    articles = GoogleNews.search(name + ' AND ("MP" OR "Member of Parliament") location:Canada')
-    return articles
+    term = %Q{#{name} AND ("MP" OR "Member of Parliament") location:Canada}
+    GoogleNews.search(term)
+  end
+
+  def update_news_articles
+    articles = fetch_news_articles
+    ids = news_articles.all(
+      :select => :id,
+      :conditions => { :id => articles }
+    ).map(&:id)
+
+    new_articles = articles.reject { |a| ids.include?(a.id) }
+    news_articles << new_articles
+    save
+
+    new_articles
   end
 
   def default_image?

@@ -89,4 +89,36 @@ class MpTest < ActiveSupport::TestCase
 
     assert !mp.links.keys.any?, "should not have links, but had #{mp.links.inspect}"
   end
+
+  context "#fetch_news_articles" do
+    should "search by the MP name along with the MP criteria" do
+      mp = Mp.new(:name => "John Stewart")
+      GoogleNews.expects(:search).with('John Stewart AND ("MP" OR "Member of Parliament") location:Canada')
+
+      mp.fetch_news_articles
+    end
+  end
+
+  context "#update_news_articles" do
+    should "not duplicate news article associations" do
+      article_1 = Factory(:news_article)
+      article_2 = Factory(:news_article)
+      mp = Factory(:mp, :news_articles => [article_1])
+
+      GoogleNews.expects(:search).returns( [article_1, article_2] )
+      mp.update_news_articles
+
+      assert_equal [article_1, article_2], mp.news_articles
+    end
+
+    should "return the new articles" do
+      article_1 = Factory(:news_article)
+      article_2 = Factory(:news_article)
+      mp = Factory(:mp, :news_articles => [article_1])
+
+      GoogleNews.expects(:search).returns( [article_1, article_2] )
+
+      assert_equal [article_2], mp.update_news_articles
+    end
+  end
 end

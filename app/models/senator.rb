@@ -21,17 +21,30 @@ class Senator < ActiveRecord::Base
     last,first = name.split(',').collect(&:strip)
     [first, last].join(" ")
   end
-  
+
   def links
     h = {}
     h[I18n.t('senators.weblink.personal', :member_name => normalized_name)]    = personal_website       unless personal_website.blank?
     h[I18n.t('senators.weblink.party', :member_name => normalized_name)]       = party_website          unless party_website.blank?
     h
   end
-  
+
   def fetch_news_articles
-    articles = []
-    articles = GoogleNews.search(name + ' AND "Senator" location:Canada')
-    return articles
+    term = %Q{#{name} AND "Senator" location:Canada}
+    GoogleNews.search(term)
+  end
+
+  def update_news_articles
+    articles = fetch_news_articles
+    ids = news_articles.all(
+      :select => :id,
+      :conditions => { :id => articles }
+    ).map(&:id)
+
+    new_articles = articles.reject { |a| ids.include?(a.id) }
+    news_articles << new_articles
+    save
+
+    new_articles
   end
 end

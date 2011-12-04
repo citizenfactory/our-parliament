@@ -44,3 +44,6 @@ Factory.define :riding do |r|
   r.name "Riding"
   r.sequence(:parl_gc_constituency_id)
 end
+
+Factory.define :news_article do |a|
+end
