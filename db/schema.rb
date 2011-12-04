@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111030172131) do
+ActiveRecord::Schema.define(:version => 20111204005341) do
 
   create_table "committee_memberships", :force => true do |t|
     t.integer "mp_id"
@@ -122,6 +122,8 @@ ActiveRecord::Schema.define(:version => 20111030172131) do
     t.integer "mp_id"
     t.integer "news_article_id"
   end
+
+  add_index "mps_news_articles", ["mp_id"], :name => "index_mps_news_articles_on_mp_id"
 
   create_table "news_articles", :force => true do |t|
     t.string   "url"
