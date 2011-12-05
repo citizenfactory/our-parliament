@@ -11,6 +11,8 @@ task :cron => :environment do
     end
   end
 
-  Rake::Task['update:twitter'].execute
-  Rake::Task['update:news'].execute
+  if (now.hour % 5) == 0
+    Rake::Task['update:twitter'].execute
+    Rake::Task['update:news'].execute
+  end
 end
