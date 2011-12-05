@@ -33,7 +33,7 @@ class MembersController < ApplicationController
   end
 
   def quotes # not used
-    @quotes = @mp.hansard_statements
+    @quotes = @mp.hansard_statements(5)
     respond_to do |format| 
       format.rss { render } 
     end
@@ -63,7 +63,7 @@ class MembersController < ApplicationController
     activity_stream.add_entries(entries)
 
     entries = []
-    quotes = @mp.hansard_statements.first 5
+    quotes = @mp.hansard_statements(5)
     quotes.each { |quote|
       entries << ActivityStream::Entry.new(quote.time.to_date, quote)
     }

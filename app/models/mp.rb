@@ -104,8 +104,8 @@ class Mp < ActiveRecord::Base
     h
   end
 
-  def hansard_statements
-    HansardStatement.find_by_sql(["SELECT * FROM hansard_statements WHERE member_name = ? ORDER BY time DESC;", name])
+  def hansard_statements(limit)
+    HansardStatement.find_by_sql(["SELECT * FROM hansard_statements WHERE member_name = ? ORDER BY time DESC LIMIT ?;", name, limit])
   end
 
   def fetch_new_tweets
