@@ -16,11 +16,7 @@ class Vote < ActiveRecord::Base
       return index ? super[0..index] : super
     end
   end
-  
-  def self.last(n)
-    find(:all, :order => "vote_date DESC", :limit => n)
-  end
-  
+
   def abstained
     Mp.active.all.size - (in_favour + opposed + paired)
   end

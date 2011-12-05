@@ -56,7 +56,7 @@ class MembersController < ApplicationController
     activity_stream = ActivityStream.new
 
     entries = []
-    votes = Vote.last 5
+    votes = Vote.all(:order => "vote_date DESC", :limit => 5)
     votes.each { |vote|
       entries << ActivityStream::Entry.new(vote.vote_date, vote)
     }
@@ -70,7 +70,7 @@ class MembersController < ApplicationController
     activity_stream.add_entries(entries)
 
     entries = []
-    tweets = @mp.tweets.first 5
+    tweets = @mp.tweets.all(:limit => 5)
     tweets.each { |tweet|
       entries << ActivityStream::Entry.new(tweet.created_at.to_date, tweet)
     }
